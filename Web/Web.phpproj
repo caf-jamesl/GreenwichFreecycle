@@ -18,13 +18,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Business\UserManagement.php" />
+    <Compile Include="Controller\Index.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
     <Compile Include="Controller\Login.php" />
     <Compile Include="Model\Result.php" />
     <Compile Include="Controller\Register.php" />
+    <Compile Include="Model\TemplateParameter.php" />
     <Compile Include="Utilities\Autoloader.php" />
     <Compile Include="Utilities\Email.php" />
+    <Compile Include="Utilities\PageManagement.php" />
     <Compile Include="Utilities\Security.php" />
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +45,7 @@
     <Content Include="Image\freecycle_logo.jpg" />
     <Content Include="packages.config" />
     <Content Include="View\index.html" />
-    <Content Include="View\MyAccount.html" />
+    <Content Include="View\myaccount.html" />
     <Content Include="View\register.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -64,7 +64,6 @@ class UserManagement
     {
         $security = new Security;
         $hashedDecimalUsername = hexdec($security->md5Hash($username));
-        print($hashedDecimalUsername);
         return substr($hashedDecimalUsername, 2, 5);
     }
 
