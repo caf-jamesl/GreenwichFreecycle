@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\DataAccess;
+namespace GreenwichFreecycle\Web\DataAccess;
 
 class Database
 {

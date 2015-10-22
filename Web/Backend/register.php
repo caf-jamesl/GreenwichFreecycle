@@ -1,9 +1,10 @@
 <?php
 
-namespace Web\Backend;
+namespace GreenwichFreecycle\Web\Backend;
 
-//include (dirname(__DIR__). '/Business/UserManagement.php');
-include (dirname(__DIR__). '/Utilities/autoloader.php');
+require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
+
+use GreenwichFreecycle\Web\Business\UserManagement;
 
 $userManagement = new UserManagement();
 $result = $userManagement->register($_POST["usernameInput"], $_POST["passwordInput"], $_POST["emailInput"]);

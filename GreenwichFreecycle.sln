@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "Web", "GreenwichFreecycle.Web\Web.phpproj", "{48175B33-5C76-4F96-B510-80FB7FB3CD8B}"
+Project("{A0786B88-2ADB-4C21-ABE8-AA2D79766269}") = "Web", "Web\Web.phpproj", "{48175B33-5C76-4F96-B510-80FB7FB3CD8B}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "GreenwichFreecycle.Database\Database.sqlproj", "{A0E116B8-C66A-4C90-8B8C-B3EB7A558ADC}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{A0E116B8-C66A-4C90-8B8C-B3EB7A558ADC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

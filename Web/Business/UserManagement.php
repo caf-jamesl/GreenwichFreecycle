@@ -1,12 +1,14 @@
 <?php
 
-namespace Web\Business;
+namespace GreenwichFreecycle\Web\Business;
 
-include (dirname(__DIR__). '/DataAccess/ConnectionFactory.php');
-include (dirname(__DIR__). '/DataAccess/Database.php');
-include (dirname(__DIR__). '/Utilities/Security.php');
-include (dirname(__DIR__). '/Utilities/Email.php');
-include (dirname(__DIR__). '/Model/Result.php');
+require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
+
+use GreenwichFreecycle\Web\Utilities\Security;
+use GreenwichFreecycle\Web\Utilities\Email;
+use GreenwichFreecycle\Web\Model\Result;
+use GreenwichFreecycle\Web\DataAccess\ConnectionFactory;
+use GreenwichFreecycle\Web\DataAccess\Database;
 
 class UserManagement
 {
@@ -35,7 +37,7 @@ class UserManagement
         $database = null;
         $connection = ConnectionFactory::getFactory()->getConnection();
         $statement = $connection->prepare('select * from Users where Username = ?');
-        $statement->bindValue(1, $username, PDO::PARAM_STR);
+        $statement->bindValue(1, $username, \PDO::PARAM_STR);
         $database = new Database;
         return $database->select($statement)[0];
     }
@@ -44,10 +46,10 @@ class UserManagement
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
         $statement = $connection->prepare('insert into Users (Username, Password, Email, AccountStatusId) values (?, ?, ?, ?)');
-        $statement->bindValue(1, $username, PDO::PARAM_STR);
-        $statement->bindValue(2, $hashedPassword, PDO::PARAM_STR);
-        $statement->bindValue(3, $email, PDO::PARAM_STR);
-        $statement->bindValue(4, 1, PDO::PARAM_INT);
+        $statement->bindValue(1, $username, \PDO::PARAM_STR);
+        $statement->bindValue(2, $hashedPassword, \PDO::PARAM_STR);
+        $statement->bindValue(3, $email, \PDO::PARAM_STR);
+        $statement->bindValue(4, 1, \PDO::PARAM_INT);
         $database = new Database;
         $database->insert($statement);
     }

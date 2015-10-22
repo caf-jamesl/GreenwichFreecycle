@@ -5,9 +5,9 @@
     <Name>Web</Name>
     <ProjectGuid>48175b33-5c76-4f96-b510-80fb7fb3cd8b</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GreenwichFreecycle.Web</RootNamespace>
+    <RootNamespace>Web</RootNamespace>
     <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
-    <AssemblyName>GreenwichFreecycle.Web</AssemblyName>
+    <AssemblyName>Web</AssemblyName>
     <ProjectHome />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -20,9 +20,9 @@
     <Compile Include="Business\UserManagement.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
-    <Compile Include="Backend\login.php" />
+    <Compile Include="Backend\Login.php" />
     <Compile Include="Model\Result.php" />
-    <Compile Include="Backend\register.php" />
+    <Compile Include="Backend\Register.php" />
     <Compile Include="Utilities\Autoloader.php" />
     <Compile Include="Utilities\Email.php" />
     <Compile Include="Utilities\Security.php" />

@@ -1,8 +1,8 @@
 <?php
 
-namespace Web\Backend;
+namespace GreenwichFreecycle\Web\Backend;
 
-include (dirname(__DIR__). '/Business/UserManagement.php');
+include_once (dirname(__DIR__). '/Business/UserManagement.php');
 
 $userManagement = new UserManagement();
 $result = $userManagement->login($_POST["usernameInput"], $_POST["passwordInput"]);

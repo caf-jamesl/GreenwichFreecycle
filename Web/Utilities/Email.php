@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\Utilities;
+namespace GreenwichFreecycle\Web\Utilities;
 
 ini_set("sendmail_from","lj231@gre.ac.uk");
 

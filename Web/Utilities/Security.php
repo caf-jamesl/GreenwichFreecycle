@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\Utilities;
+namespace GreenwichFreecycle\Web\Utilities;
 
 class Security
 {

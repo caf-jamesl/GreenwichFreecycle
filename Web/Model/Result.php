@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\Model;
+namespace GreenwichFreecycle\Web\Model;
 
 class Result
 {
