@@ -22,7 +22,7 @@ class UserManagement
     {
         $security = new Security;
         $hashedPassword = $security->phpHash($password);
-        if ($this->getUser)
+        if ($this->getUser($username))
         {
             return new Result(false, "Sorry, that username has already been taken. Please choose another.");
         }

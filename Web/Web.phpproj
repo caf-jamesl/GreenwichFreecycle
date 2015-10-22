@@ -20,9 +20,9 @@
     <Compile Include="Business\UserManagement.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
-    <Compile Include="Backend\Login.php" />
+    <Compile Include="Controller\Login.php" />
     <Compile Include="Model\Result.php" />
-    <Compile Include="Backend\Register.php" />
+    <Compile Include="Controller\Register.php" />
     <Compile Include="Utilities\Autoloader.php" />
     <Compile Include="Utilities\Email.php" />
     <Compile Include="Utilities\Security.php" />
@@ -41,9 +41,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Image\freecycle_logo.jpg" />
     <Content Include="packages.config" />
-    <Content Include="Page\index.html" />
-    <Content Include="Page\MyAccount.html" />
-    <Content Include="Page\register.html" />
+    <Content Include="View\index.html" />
+    <Content Include="View\MyAccount.html" />
+    <Content Include="View\register.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
@@ -58,9 +58,9 @@
     <Folder Include="Business\" />
     <Folder Include="DataAccess\" />
     <Folder Include="Model\" />
-    <Folder Include="Backend\" />
+    <Folder Include="Controller\" />
     <Folder Include="Utilities\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Page\" />
+    <Folder Include="View\" />
   </ItemGroup>
 </Project>
