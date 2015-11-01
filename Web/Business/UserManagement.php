@@ -15,7 +15,12 @@ class UserManagement
     public function login($username, $password)
     {
         $user = $this->getUser($username);
-        $this->checkPassword($user, $password);
+        if(!$this->checkPassword($user, $password))
+        {
+            return new Result(false, "Sorry, there is something wrong with your login details. Please check them and try again.");
+        }
+        //Set session details
+        return new Result(true);
     }
 
     public function register($username, $password, $email)
@@ -30,6 +35,21 @@ class UserManagement
         $activationCode = $this->getActivationCode($username);
         $this->sendConfirmation($username, $email, $activationCode);
         return new Result(true);
+    }
+
+    public function activate($username, $activationCode)
+    {
+        if (!$this->getUser($username))
+        {
+            return new Result(false, "Sorry, that username cannot be found in our database. Please check your it and try again.");
+        }
+        $correctActivationCode = $this->getActivationCode($username);
+        if ($correctActivationCode === $activationCode)
+        {
+            $this->actvateUser($username);
+            return new Result(true);
+        }
+        return new Result(false, "Sorry, that activation code was incorrect. Please check it and try again");
     }
 
     private function getUser($username)
@@ -54,6 +74,16 @@ class UserManagement
         $database->insert($statement);
     }
 
+    private function actvateUser($username)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('UPDATE Users SET AccountStatusId=? WHERE Username = ?');
+        $statement->bindValue(1, 2, \PDO::PARAM_INT);
+        $statement->bindValue(2, $username, \PDO::PARAM_STR);
+        $database = new Database;
+        $database->update($statement);
+    }
+
     private function checkPassword($user, $password)
     {
         $security = new Security;
@@ -73,7 +103,7 @@ class UserManagement
         $message = "Hello $username \r\n"
                     . "Thank you for signing up to Greenwich Freecycle. "
                     . "please click the link below to complete you're registration. \r\n"
-                    . "http://www.google.com \r\n"
+                    . "http://stuweb.cms.gre.ac.uk/~lj231/GreenwichFreecycle/Web/Controller/Activation.php?activationCode=$activationCode&username=$username \r\n"
                     . "Here is your activation code: $activationCode";
         $email = new Email($email, $subject, $message);
         $email->send();

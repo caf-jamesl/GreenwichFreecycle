@@ -1,11 +1,8 @@
 <?php
 
-namespace GreenwichFreecycle\Web\Controller;
-
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
-use GreenwichFreecycle\Web\Model\Result;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 
@@ -16,11 +13,11 @@ function main()
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         $userManagement = new UserManagement();
-        $result = $userManagement->register($_POST["usernameInput"], $_POST["passwordInput"], $_POST["emailInput"]);
+        $result = $userManagement->activate($_POST["usernameInput"], $_POST["codeInput"]);
         if($result->worked)
         {
             $usernameInputErrorMessage = '';
-            header('Location: RegisterThankYou.php');
+            header('Location: ActivateThankYou.php');
             exit;
         } else
         {
@@ -29,15 +26,14 @@ function main()
             exit;
         }
     }
-
-    outputPage();
+    outputPage($_GET["username"], $_GET["activationCode"]);
 }
 
-function outputPage($usernameInputErrorMessage = '')
+function outputPage($username = '', $activationCode = '')
 {
-    $templateParameters = array(new TemplateParameter(usernameInputErrorMessage, $usernameInputErrorMessage));
+    $templateParameters = array(new TemplateParameter(activationCode, $activationCode), new TemplateParameter(username, $username));
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('register.html', $templateParameters);
+    echo $pageManagement->handlePage('activation.html', $templateParameters);
 }
 
 ?>

@@ -3,52 +3,36 @@
 <head>
     <title>Greenwich Freecycle Register</title>
     <link rel="stylesheet" href="../Content/bootstrap.min.css" />
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="../Controller/Index.php">
-                <img alt="Greenwich Freecycle" src=".."/>
-            </a>
-        </div>
-        <form class="form-inline" action="" method="post">
-            <div class="form-group, text-right">
-                <label for="headerUsernameInput">Username</label>
-                <input type="text" class="form-control" placeholder="Username" id="headerUsernameInput"/>
-                <label for="headerPasswordInput">Password</label>
-                <input type="password" class="form-control" placeholder="Password" id="headerPasswordInput"/>
-                <button type="submit" class="form-control">Login</button>
-                <a href="../Controller/Register.php">Register for an account</a>
+    {{topNav}}
+    <form class="form-horizontal" action="../Controller/Register.php" method="post">
+        <div class="form-group">
+            <label for="usernameInput" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="Username" />
+                {{usernameInputErrorMessage}}
             </div>
-        </form>
-    </div>
-</nav>
-<form class="form-horizontal" action="../Controller/Register.php" method="post">
-    <div class="form-group">
-        <label for="usernameInput" class="col-sm-2 control-label">Username</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="Username"/>
-            {{usernameInputErrorMessage}}
         </div>
-    </div>
-    <div class="form-group">
-        <label for="emailInput" class="col-sm-2 control-label">Email</label>
-        <div class="col-sm-10">
-            <input type="email" class="form-control" id="emailInput" name="emailInput" placeholder="Email"/>
+        <div class="form-group">
+            <label for="emailInput" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="emailInput" name="emailInput" placeholder="Email" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="passwordInput" class="col-sm-2 control-label">Password</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Password"/>
+        <div class="form-group">
+            <label for="passwordInput" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="Password" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default" value="post">Register</button>
+            <div class="g-recaptcha form-group" data-sitekey="6LfYFBATAAAAAKaUHl7lNK5AVFk6g9VHqCmw-r3t"></div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" value="post">Register</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
 </html>

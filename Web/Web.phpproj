@@ -18,7 +18,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Business\UserManagement.php" />
+    <Compile Include="Controller\Activation.php" />
     <Compile Include="Controller\Index.php" />
+    <Compile Include="Controller\MyAccount.php" />
+    <Compile Include="Controller\RegisterThankYou.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
     <Compile Include="Controller\Login.php" />
@@ -44,6 +47,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Image\freecycle_logo.jpg" />
     <Content Include="packages.config" />
+    <Content Include="View\activation.html" />
     <Content Include="View\index.html" />
     <Content Include="View\myaccount.html" />
     <Content Include="View\register.html" />
@@ -53,6 +57,9 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="View\registerthankyou.html" />
+    <Content Include="View\topnavloggedout.html" />
+    <Content Include="View\topnavloggedin.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />

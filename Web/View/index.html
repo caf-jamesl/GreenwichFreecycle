@@ -5,24 +5,21 @@
     <link rel="stylesheet" href="../Content/bootstrap.min.css" />
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="../Controller/Index.php">
-                    <img alt="Greenwich Freecycle" src=".."/>
-                </a>
-            </div>
-            <form class="form-inline" action="../Controller/login.php" method="post">
-                <div class="form-group, text-right">
-                    <label for="usernameInput">Username</label>
-                    <input type="text" class="form-control" placeholder="Username" id="usernameInput" name="usernameInput"/>
-                    <label for="usernameInput">Password</label>
-                    <input type="password" class="form-control" placeholder="Password" id="passwordInput" name="passwordInput"/>
-                    <button type="submit" class="form-control" value="post">Login</button>
-                    <a href="../Controller/Register.php">Register for an account</a>
+    {{topNav}}
+    <div class="container">
+        <div class="row">
+            <h2>Search Greenwich Freecycle</h2>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="  search-query form-control" placeholder="Search" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button">
+                            <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
                 </div>
-            </form>
+            </div>
         </div>
-    </nav>
+    </div>
 </body>
 </html>

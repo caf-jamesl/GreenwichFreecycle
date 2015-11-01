@@ -15,7 +15,7 @@ function main()
 function outputPage()
 {
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('index.html', null);
+    echo $pageManagement->handlePage('myaccount.html', null);
 }
 
 ?>
