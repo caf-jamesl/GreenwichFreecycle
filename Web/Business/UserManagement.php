@@ -6,6 +6,7 @@ require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Utilities\Security;
 use GreenwichFreecycle\Web\Utilities\Email;
+use GreenwichFreecycle\Web\Utilities\SessionManagement;
 use GreenwichFreecycle\Web\Model\Result;
 use GreenwichFreecycle\Web\DataAccess\ConnectionFactory;
 use GreenwichFreecycle\Web\DataAccess\Database;
@@ -15,11 +16,12 @@ class UserManagement
     public function login($username, $password)
     {
         $user = $this->getUser($username);
+        $user->loggedin = true;
         if(!$this->checkPassword($user, $password))
         {
             return new Result(false, "Sorry, there is something wrong with your login details. Please check them and try again.");
         }
-        //Set session details
+        SessionManagement::instance()->set('$user', $user);
         return new Result(true);
     }
 

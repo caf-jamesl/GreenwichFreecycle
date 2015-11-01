@@ -32,6 +32,7 @@
     <Compile Include="Utilities\Email.php" />
     <Compile Include="Utilities\PageManagement.php" />
     <Compile Include="Utilities\Security.php" />
+    <Compile Include="Utilities\SessionManagement.php" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
