@@ -17,14 +17,18 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Business\AdvertManagement.php" />
     <Compile Include="Business\UserManagement.php" />
     <Compile Include="Controller\Activation.php" />
     <Compile Include="Controller\Index.php" />
+    <Compile Include="Controller\Logout.php" />
     <Compile Include="Controller\MyAccount.php" />
+    <Compile Include="Controller\MyAdverts.php" />
     <Compile Include="Controller\RegisterThankYou.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
     <Compile Include="Controller\Login.php" />
+    <Compile Include="Model\Advert.php" />
     <Compile Include="Model\Result.php" />
     <Compile Include="Controller\Register.php" />
     <Compile Include="Model\TemplateParameter.php" />
@@ -53,8 +57,11 @@
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="View\activation.html" />
+    <Content Include="View\addnewitem.html" />
     <Content Include="View\index.html" />
+    <Content Include="View\logout.html" />
     <Content Include="View\myaccount.html" />
+    <Content Include="View\myadverts.html" />
     <Content Include="View\register.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

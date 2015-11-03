@@ -16,7 +16,7 @@ function main()
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         $userManagement = new UserManagement();
-        $result = $userManagement->register($_POST["usernameInput"], $_POST["passwordInput"], $_POST["emailInput"]);
+        $result = $userManagement->register($_POST['usernameInput'], $_POST['passwordInput'], $_POST['emailInput']);
         if($result->worked)
         {
             $usernameInputErrorMessage = '';

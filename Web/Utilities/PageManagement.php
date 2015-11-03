@@ -23,13 +23,15 @@ class PageManagement
     private function getTopNav()
     {
         $user = SessionManagement::instance()->get('user');
-        if(is_null($user.loggedIn))
+        if(!is_null($user))
         {
             $html = file_get_contents('../View/topnavloggedin.html');
-            $html = str_replace('{{username}}', $user.Username, $html);
-            return file_get_contents('../View/topnavloggedin.html');
+            return str_replace('{{username}}', $user->Username, $html);
         }
-        return file_get_contents('../View/topnavloggedout.html');
+        else
+        {
+            return file_get_contents('../View/topnavloggedout.html');
+        }
     }
 }
 

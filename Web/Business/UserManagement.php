@@ -16,12 +16,17 @@ class UserManagement
     public function login($username, $password)
     {
         $user = $this->getUser($username);
-        $user->loggedIn = true;
         if(!$this->checkPassword($user, $password))
         {
             return new Result(false, 'Sorry, there is something wrong with your login details. Please check them and try again.');
         }
         SessionManagement::instance()->set('user', $user);
+        return new Result(true);
+    }
+
+    public function logout()
+    {
+        SessionManagement::instance()->set('user', null);
         return new Result(true);
     }
 
