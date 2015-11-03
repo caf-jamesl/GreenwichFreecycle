@@ -2,18 +2,11 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="../Controller/Index.php">
-                <img alt="Greenwich Freecycle" src=".." />
+                <img alt="Greenwich Freecycle" src=".."/>
             </a>
         </div>
-        <form class="form-inline" action="../Controller/login.php" method="post">
-            <div class="form-group, text-right">
-                <label for="usernameInput">Username</label>
-                <input type="text" class="form-control" placeholder="Username" id="usernameInput" name="usernameInput" required="required"/>
-                <label for="usernameInput">Password</label>
-                <input type="password" class="form-control" placeholder="Password" id="passwordInput" name="passwordInput" required="required"/>
-                <button type="submit" class="form-control" value="post">Login</button>
-                <a href="../Controller/Register.php">Register for an account</a>
-            </div>
-        </form>
+        <div>
+            Welcome {{username}}
+        </div>
     </div>
 </nav>

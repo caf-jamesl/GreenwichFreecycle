@@ -16,12 +16,12 @@ class UserManagement
     public function login($username, $password)
     {
         $user = $this->getUser($username);
-        $user->loggedin = true;
+        $user->loggedIn = true;
         if(!$this->checkPassword($user, $password))
         {
-            return new Result(false, "Sorry, there is something wrong with your login details. Please check them and try again.");
+            return new Result(false, 'Sorry, there is something wrong with your login details. Please check them and try again.');
         }
-        SessionManagement::instance()->set('$user', $user);
+        SessionManagement::instance()->set('user', $user);
         return new Result(true);
     }
 
@@ -43,7 +43,7 @@ class UserManagement
     {
         if (!$this->getUser($username))
         {
-            return new Result(false, "Sorry, that username cannot be found in our database. Please check your it and try again.");
+            return new Result(false, 'Sorry, that username cannot be found in our database. Please check your it and try again.');
         }
         $correctActivationCode = $this->getActivationCode($username);
         if ($correctActivationCode === $activationCode)
@@ -51,7 +51,7 @@ class UserManagement
             $this->actvateUser($username);
             return new Result(true);
         }
-        return new Result(false, "Sorry, that activation code was incorrect. Please check it and try again");
+        return new Result(false, 'Sorry, that activation code was incorrect. Please check it and try again');
     }
 
     private function getUser($username)
@@ -101,7 +101,7 @@ class UserManagement
 
     private function sendConfirmation($username, $email, $activationCode)
     {
-        $subject = "Greenwich Freecycle Registration Confirmation";
+        $subject = 'Greenwich Freecycle Registration Confirmation';
         $message = "Hello $username \r\n"
                     . "Thank you for signing up to Greenwich Freecycle. "
                     . "please click the link below to complete you're registration. \r\n"

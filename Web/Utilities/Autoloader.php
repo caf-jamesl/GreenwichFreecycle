@@ -12,6 +12,6 @@ function autoload($className)
     }
 }
 
-spl_autoload_register("GreenwichFreecycle\Web\Utilities\autoload");
+spl_autoload_register('GreenwichFreecycle\Web\Utilities\autoload');
 
 ?>

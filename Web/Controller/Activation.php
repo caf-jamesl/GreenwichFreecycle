@@ -13,7 +13,7 @@ function main()
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         $userManagement = new UserManagement();
-        $result = $userManagement->activate($_POST["usernameInput"], $_POST["codeInput"]);
+        $result = $userManagement->activate($_POST['usernameInput'], $_POST['codeInput']);
         if($result->worked)
         {
             $usernameInputErrorMessage = '';
@@ -26,7 +26,7 @@ function main()
             exit;
         }
     }
-    outputPage($_GET["username"], $_GET["activationCode"]);
+    outputPage($_GET['username'], $_GET['activationCode']);
 }
 
 function outputPage($username = '', $activationCode = '')

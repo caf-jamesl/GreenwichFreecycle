@@ -48,13 +48,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Image\freecycle_logo.jpg" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="View\activation.html" />
     <Content Include="View\index.html" />
     <Content Include="View\myaccount.html" />
     <Content Include="View\register.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
