@@ -9,8 +9,7 @@ class SessionManagement
 
     public static function instance() {
         if (self::$instance == null) {
-            $class = __CLASS__;
-            self::$instance = new $class;
+            self::$instance = new SessionManagement;
         }
         return self::$instance;
     }
@@ -25,6 +24,10 @@ class SessionManagement
 
     public function get($name) {
         return $this->session[$name];
+    }
+
+    public function remove($name) {
+        unset($this->session[$name]);
     }
 }
 

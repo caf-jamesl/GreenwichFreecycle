@@ -18,7 +18,7 @@ class UserManagement
         $user = $this->getUser($username);
         if(!$this->checkPassword($user, $password))
         {
-            return new Result(false, 'Sorry, there is something wrong with your login details. Please check them and try again.');
+            return new Result(false, "Sorry, there is something wrong with your login details. Please check them and try again. $user->Username $password");
         }
         SessionManagement::instance()->set('user', $user);
         return new Result(true);
@@ -26,7 +26,7 @@ class UserManagement
 
     public function logout()
     {
-        SessionManagement::instance()->set('user', null);
+        SessionManagement::instance()->remove('user');
         return new Result(true);
     }
 
@@ -94,7 +94,7 @@ class UserManagement
     private function checkPassword($user, $password)
     {
         $security = new Security;
-        return $security->phpVerify($user->Password, $password);
+        return $security->phpVerify($password, $user->Password);
     }
 
     private function getActivationCode($username)
