@@ -11,7 +11,7 @@ class Database
             return $statement->fetchAll(\PDO::FETCH_OBJ);
         }
         catch (Exception $ex){
-            print($ex->getMessage());
+            echo ($ex->getMessage());
             return null;
         }
     }
@@ -22,7 +22,7 @@ class Database
             $statement->execute();
         }
         catch (Exception $ex){
-            print ($ex->getMessage);
+            echo ($ex->getMessage);
         }
     }
 
@@ -33,7 +33,7 @@ class Database
             return true;
         }
         catch (Exception $ex){
-            print($ex->getMessage());
+            echo ($ex->getMessage());
             return false;
         }
     }

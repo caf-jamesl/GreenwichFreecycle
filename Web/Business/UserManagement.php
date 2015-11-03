@@ -8,6 +8,8 @@ use GreenwichFreecycle\Web\Utilities\Security;
 use GreenwichFreecycle\Web\Utilities\Email;
 use GreenwichFreecycle\Web\Utilities\SessionManagement;
 use GreenwichFreecycle\Web\Model\Result;
+use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
+use GreenwichFreecycle\Web\Model\Enum\ErrorCode;
 use GreenwichFreecycle\Web\DataAccess\ConnectionFactory;
 use GreenwichFreecycle\Web\DataAccess\Database;
 
@@ -18,15 +20,21 @@ class UserManagement
         $user = $this->getUser($username);
         if(!$this->checkPassword($user, $password))
         {
-            return new Result(false, "Sorry, there is something wrong with your login details. Please check them and try again. $user->Username $password");
+            return new Result(false, 'Sorry, there is something wrong with your login details. Please check them and try again.', ErrorCode::PasswordIncorrect);
         }
-        SessionManagement::instance()->set('user', $user);
+        if(!$user->AccountStatusId === AccountStatus::Confirmed)
+        {
+            return new Result(false, 'Please activate your account and then try again', ErrorCode::UserNotActivated);
+        }
+        $sessionManagement = new SessionManagement;
+        $sessionManagement->set('user', $user);
         return new Result(true);
     }
 
     public function logout()
     {
-        SessionManagement::instance()->remove('user');
+        $sessionManagement = new SessionManagement;
+        $sessionManagement->set('user', null);
         return new Result(true);
     }
 
@@ -57,6 +65,16 @@ class UserManagement
             return new Result(true);
         }
         return new Result(false, 'Sorry, that activation code was incorrect. Please check it and try again');
+    }
+
+    public function isLoggedIn()
+    {
+        $sessionManagement = new SessionManagement;
+        if (is_null($sessionManagement->get('user')))
+        {
+            return false;
+        }
+        return true;
     }
 
     private function getUser($username)

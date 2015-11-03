@@ -22,7 +22,8 @@ class PageManagement
 
     private function getTopNav()
     {
-        $user = SessionManagement::instance()->get('user');
+        $sessionManagement = new SessionManagement;
+        $user = $sessionManagement->get('user');
         if(!is_null($user))
         {
             $html = file_get_contents('../View/topnavloggedin.html');
