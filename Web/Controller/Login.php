@@ -31,7 +31,7 @@ function main()
     {
         switch ($result->errorCode) {
             case ErrorCode::PasswordIncorrect:
-                header('Location: Error.php?errorCode= ' . ErrorCode::PasswordIncorrect);
+                header('Location: Error.php?errorCode=' . ErrorCode::PasswordIncorrect);
                 break;
             case ErrorCode::UserNotActivated:
                 header('Location: Activation.php?username=jamesl123');

@@ -2,19 +2,62 @@
 
 namespace GreenwichFreecycle\Web\Utilities;
 
+use GreenwichFreecycle\Web\Utilities\SessionManagement;
+
 class Validation
 {
-    public function ValidateUsername($username)
+    public function validateUsername($username)
     {
 
     }
 
-    public function ValidatePassword($password)
+    public function validatePassword($password)
     {
     }
 
-    public function ValidateEmail($email)
+    public function validateEmail($email)
     {
+    }
+
+    public function validateImages($images)
+    {
+        $valid_formats = array('jpg', 'png', 'gif', 'bmp');
+        $max_file_size = 1024*100; //100 kb
+        $path = '/ImageUploads/'; // Upload directory
+        $okayImages=array();
+        foreach ($images['name'] as $f => $name) 
+        {     
+            if ($images['error'][$f] == 4) 
+            {
+            echo 'jaems1';
+                continue; // Skip file if any error found
+            }	       
+            if ($images['error'][$f] == 0) 
+            {	           
+                if ($images['size'][$f] > $max_file_size) 
+                {
+                            echo 'jaems2';
+                    continue; // Skip large files
+                }
+                elseif( ! in_array(pathinfo($name, PATHINFO_EXTENSION), $valid_formats) )
+                {
+                            echo 'jaems3';
+                    continue; // Skip invalid file formats
+                }
+                else
+                {
+                    $sessionManagement = new SessionManagement;
+                    $user = $sessionManagement->get('user'); 
+                    $pathAndName = dirname(__DIR__).$path.date('Y-m-d H:i:s').$name;
+                    if (move_uploaded_file($images['tmp_name'][$f], $pathAndName))
+                    {
+                        array_push($okayImages, $pathAndName);
+                        echo "Uploaded";
+                    }
+                }
+            }
+        }
+        return $okayImages;
     }
 }
 

@@ -20,11 +20,11 @@ class UserManagement
         $user = $this->getUser($username);
         if(!$this->checkPassword($user, $password))
         {
-            return new Result(false, 'Sorry, there is something wrong with your login details. Please check them and try again.', ErrorCode::PasswordIncorrect);
+            return new Result(false, ErrorCode::PasswordIncorrect);
         }
-        if(!$user->AccountStatusId === AccountStatus::Confirmed)
+        if(!$user->AccountStatusId == AccountStatus::Confirmed)
         {
-            return new Result(false, 'Please activate your account and then try again', ErrorCode::UserNotActivated);
+            return new Result(false, ErrorCode::UserNotActivated);
         }
         $sessionManagement = new SessionManagement;
         $sessionManagement->set('user', $user);
