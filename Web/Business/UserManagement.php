@@ -22,7 +22,7 @@ class UserManagement
         {
             return new Result(false, ErrorCode::PasswordIncorrect);
         }
-        if(!$user->AccountStatusId == AccountStatus::Confirmed)
+        if(!($user->AccountStatusId == AccountStatus::Confirmed))
         {
             return new Result(false, ErrorCode::UserNotActivated);
         }
@@ -77,7 +77,7 @@ class UserManagement
         return true;
     }
 
-    private function getUser($username)
+    public function getUser($username)
     {
         $database = null;
         $connection = ConnectionFactory::getFactory()->getConnection();

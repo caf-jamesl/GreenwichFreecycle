@@ -14,6 +14,10 @@ main();
 
 function main()
 {
+        $advertManagement = new AdvertManagement;
+        $adverts = $advertManagement->getAdverts();
+        $searchResults = createSearchResults($adverts);
+
     $userManagement = new UserManagement;
     if ($userManagement->isLoggedIn())
     {
@@ -25,6 +29,12 @@ function main()
         header('Location: Index.php');
         exit;
     }
+}
+
+function createSearchResults()
+{
+    $pageManagement = new PageManagement;
+    echo $pageManagement->handlePage('myadverts.html', null);
 }
 
 function outputPage()

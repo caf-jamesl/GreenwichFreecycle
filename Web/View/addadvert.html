@@ -3,19 +3,7 @@
 <head>
     <title>Greenwich Freecycle Add New</title>
     <link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <style>
-        #gallery .thumbnail {
-            width: 150px;
-            height: 150px;
-            float: left;
-            margin: 2px;
-        }
-
-            #gallery .thumbnail img {
-                width: 150px;
-                height: 150px;
-            }
-    </style>
+    <link rel="stylesheet" href="../Content/Custom/site.css" />
 </head>
 <body>
     {{topNav}}
@@ -33,9 +21,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="fileInput[]" class="col-sm-2 control-label">Select images to upload</label>
+            <label for="fileInput" class="col-sm-2 control-label">Select images to upload</label>
             <div class="col-sm-10">
-                <input type="file" id="fileInput[]" name="fileInput[]" multiple="multiple" />
+                <input type="file" id="fileInput" name="fileInput[]" multiple="multiple" />
             </div>
         </div>
         <h3 class="hidden" id="imagesHeader">Images</h3>
@@ -46,38 +34,6 @@
             </div>
         </div>
     </form>
-    <script>
-        var uploadfiles = document.querySelector('#fileinput');
-        uploadfiles.addEventListener('change', function () {
-            var files = this.files;
-            for (var i = 0; i < files.length; i++) {
-                previewImage(this.files[i]);
-            }
-            var imagesHeaderId = "imagesHeader";
-            var images = document.getElementById(imagesHeaderId);
-            images.className = "";
-
-        }, false);
-    </script>
-    <script>
-        function previewImage(file) {
-            var galleryId = "gallery";
-            var gallery = document.getElementById(galleryId);
-            var imageType = /image.*/;
-            if (!file.type.match(imageType)) {
-                throw "File Type must be an image";
-            }
-            var thumb = document.createElement("div");
-            thumb.classList.add('thumbnail'); // Add the class thumbnail to the created div
-            var img = document.createElement("img");
-            img.file = file;
-            thumb.appendChild(img);
-            gallery.appendChild(thumb);
-            // Using FileReader to display the image content
-            var reader = new FileReader();
-            reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
-            reader.readAsDataURL(file);
-        }
-    </script>
+    <script type="text/javascript" src="../Scripts/Custom/Image.js"></script>
 </body>
 </html>

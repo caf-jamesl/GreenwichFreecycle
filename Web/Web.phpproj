@@ -27,6 +27,7 @@
     <Compile Include="Controller\MyAccount.php" />
     <Compile Include="Controller\MyAdverts.php" />
     <Compile Include="Controller\RegisterThankYou.php" />
+    <Compile Include="Controller\SearchResults.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
     <Compile Include="Controller\Login.php" />
@@ -36,6 +37,7 @@
     <Compile Include="Model\Result.php" />
     <Compile Include="Controller\Register.php" />
     <Compile Include="Model\TemplateParameter.php" />
+    <Compile Include="Service\CheckName.php" />
     <Compile Include="Utilities\Autoloader.php" />
     <Compile Include="Utilities\Email.php" />
     <Compile Include="Utilities\PageManagement.php" />
@@ -50,13 +52,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom\site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Image\cross.gif" />
     <Content Include="Image\freecycle_logo.jpg" />
+    <Content Include="Image\tick.gif" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\Custom\Image.js" />
+    <Content Include="Scripts\Custom\Username.js" />
     <Content Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -75,11 +82,13 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="View\registerthankyou.html" />
+    <Content Include="View\searchresults.html" />
     <Content Include="View\topnavloggedout.html" />
     <Content Include="View\topnavloggedin.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
+    <Folder Include="Content\Custom\" />
     <Folder Include="fonts\" />
     <Folder Include="Image\" />
     <Folder Include="Business\" />
@@ -87,7 +96,8 @@
     <Folder Include="Model\" />
     <Folder Include="Controller\" />
     <Folder Include="Model\Enum\" />
-    <Folder Include="ImageUploads\" />
+    <Folder Include="Service\" />
+    <Folder Include="Scripts\Custom\" />
     <Folder Include="Utilities\" />
     <Folder Include="Scripts\" />
     <Folder Include="View\" />

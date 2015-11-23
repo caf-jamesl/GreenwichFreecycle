@@ -15,26 +15,25 @@ main();
 
 function main()
 {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    $userManagement = new UserManagement;
+    if ($userManagement->isLoggedIn())
     {
-        $validation = new Validation;
-        $images = $_FILES['fileInput'];
-        $okayImages = $validation->validateImages($images);
-        $advertManagement = new AdvertManagement;
-        $advertManagement->addAdvert($_POST['advertTitleInput'], $_POST['advertDescriptionTextarea'], $okayImages);
-    }
-
-  //  $userManagement = new UserManagement;
-   // if ($userManagement->isLoggedIn())
-   // {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $validation = new Validation;
+            $images = $_FILES['fileInput'];
+            $okayImages = $validation->validateImages($images);
+            $advertManagement = new AdvertManagement;
+            $advertManagement->addAdvert($_POST['advertTitleInput'], $_POST['advertDescriptionTextarea'], $okayImages);
+        }
         outputPage();
         exit;
-  //  }
-  //  else
-  //  {
-  //      header('Location: Index.php');
-  //      exit;
-  //  }
+    }
+    else
+    {
+        header('Location: Index.php');
+        exit;
+    }
 }
 
 function outputPage()

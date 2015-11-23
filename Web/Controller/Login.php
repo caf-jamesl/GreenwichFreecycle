@@ -14,8 +14,8 @@ main();
 
 function main()
 {
-    $username = $_POST['usernameInput'];
-    $password = $_POST['passwordInput'];
+    $username = $_POST['topNavUsernameInput'];
+    $password = $_POST['topNavPasswordInput'];
 
     $validation = new Validation;
     $validation->ValidateUsername($username);
@@ -34,7 +34,7 @@ function main()
                 header('Location: Error.php?errorCode=' . ErrorCode::PasswordIncorrect);
                 break;
             case ErrorCode::UserNotActivated:
-                header('Location: Activation.php?username=jamesl123');
+                header("Location: Activation.php?username=$username");
                 break;
         }
         exit();

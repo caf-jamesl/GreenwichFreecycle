@@ -15,23 +15,25 @@ class AdvertManagement
         $sessionManagement = new SessionManagement;
         $user = $sessionManagement->get('user');
         $advertId = $this->insertAdvert($title, $description, $user->UserId);
-      //  $this->insertImageLocations($advertId, $images);
+        $this->insertImageLocations($advertId, $images);
     }
 
     public function removeAdvert()
     {
     }
 
-    private function insertAdvert($title, $description, $userId)
+    public function getAdverts($userId)
+    {
+        return $this->getAdvertsByUserId($userId);
+    }
+
+    private function getAdvertsByUserId($userId)
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('insert into Adverts (Title, Description, UserId) values (?, ?, ?)');
-        $statement->bindValue(1, $title, \PDO::PARAM_STR);
-        $statement->bindValue(2, $description, \PDO::PARAM_STR);
-        $statement->bindValue(3, $userId, \PDO::PARAM_INT);
+        $statement = $connection->prepare('select from Adverts where UserId = ?');
+        $statement->bindValue(1, $userId, \PDO::PARAM_INT);
         $database = new Database;
-        $database->insert($statement);
-        return $connection->lastInsertId();
+        return $database->select($statement);
     }
 
     private function insertImageLocations($advertId, $images)
@@ -39,11 +41,11 @@ class AdvertManagement
         foreach ($images as $image)
         {
             $connection = ConnectionFactory::getFactory()->getConnection();
-            $statement = $connection->prepare('insert into Images (Location) values (?)');
+            $statement = $connection->prepare('insert into Images (Location, AdvertId) values (?, ?)');
             $statement->bindValue(1, $image, \PDO::PARAM_STR);
+            $statement->bindValue(2, $advertId, \PDO::PARAM_INT);
             $database = new Database;
             $database->insert($statement);
-    
         }
     }
 }

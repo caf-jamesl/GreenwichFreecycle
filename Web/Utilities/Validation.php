@@ -8,7 +8,6 @@ class Validation
 {
     public function validateUsername($username)
     {
-
     }
 
     public function validatePassword($password)
@@ -46,9 +45,7 @@ class Validation
                 }
                 else
                 {
-                    $sessionManagement = new SessionManagement;
-                    $user = $sessionManagement->get('user'); 
-                    $pathAndName = dirname(__DIR__).$path.date('Y-m-d H:i:s').$name;
+                    $pathAndName = dirname(dirname(dirname(__DIR__))).$path.date('Y-m-d H:i:s').$name;
                     if (move_uploaded_file($images['tmp_name'][$f], $pathAndName))
                     {
                         array_push($okayImages, $pathAndName);
