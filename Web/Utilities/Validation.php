@@ -28,25 +28,25 @@ class Validation
         {     
             if ($images['error'][$f] == 4) 
             {
-            echo 'jaems1';
+            //echo 'jaems1';
                 continue; // Skip file if any error found
             }	       
             if ($images['error'][$f] == 0) 
             {	           
                 if ($images['size'][$f] > $max_file_size) 
                 {
-                            echo 'jaems2';
+                        //    echo 'jaems2';
                     continue; // Skip large files
                 }
                 elseif( ! in_array(pathinfo($name, PATHINFO_EXTENSION), $valid_formats) )
                 {
-                            echo 'jaems3';
+                        //    echo 'jaems3';
                     continue; // Skip invalid file formats
                 }
                 else
                 {
-                    $pathAndName = dirname(dirname(dirname(__DIR__))).$path.date('Y-m-d H:i:s').$name;
-                    if (move_uploaded_file($images['tmp_name'][$f], $pathAndName))
+                    $pathAndName = $path.date('Y-m-d H:i:s').$name;
+                    if (move_uploaded_file($images['tmp_name'][$f], dirname(dirname(dirname(__DIR__))).$pathAndName))
                     {
                         array_push($okayImages, $pathAndName);
                         echo "Uploaded";

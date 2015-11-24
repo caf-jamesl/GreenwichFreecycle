@@ -44,7 +44,7 @@ class UserManagement
         $hashedPassword = $security->phpHash($password);
         if ($this->getUser($username))
         {
-            return new Result(false, "Sorry, that username has already been taken. Please choose another.");
+            return new Result(false, ErrorCode::UsernameTaken);
         }
         $this->addUser($username, $hashedPassword, $email);
         $activationCode = $this->getActivationCode($username);
@@ -56,6 +56,7 @@ class UserManagement
     {
         if (!$this->getUser($username))
         {
+            print 'james';
             return new Result(false, 'Sorry, that username cannot be found in our database. Please check your it and try again.');
         }
         $correctActivationCode = $this->getActivationCode($username);

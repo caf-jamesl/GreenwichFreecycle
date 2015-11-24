@@ -7,21 +7,24 @@ error_reporting(0);
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
+use GreenwichFreecycle\Web\Business\AdvertManagement;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
+use GreenwichFreecycle\Web\Utilities\SessionManagement;
 
 main();
 
 function main()
 {
-        $advertManagement = new AdvertManagement;
-        $adverts = $advertManagement->getAdverts();
-        $searchResults = createSearchResults($adverts);
-
     $userManagement = new UserManagement;
     if ($userManagement->isLoggedIn())
     {
-        outputPage();
+        $sessionManagement = new SessionManagement;
+        $userId = $sessionManagement->get('user')->UserId;
+        $advertManagement = new AdvertManagement;
+        $adverts = $advertManagement->getAdverts($userId);
+        $searchResults = createSearchResults($adverts);
+        outputPage($searchResults);
         exit;
     }
     else
@@ -31,16 +34,20 @@ function main()
     }
 }
 
-function createSearchResults()
+function createSearchResults($adverts)
 {
-    $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('myadverts.html', null);
+     $advertManagement = new AdvertManagement;
+     foreach ($adverts as $advert)
+     {
+     $html = $html . $advertManagement->createAdvertHtml($advert);
+     }
+    return array(new TemplateParameter(searchResults, $html));
 }
 
-function outputPage()
+function outputPage($templateParameters = '')
 {
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('myadverts.html', null);
+    echo $pageManagement->handlePage('myadverts.html', $templateParameters);
 }
 
 ?>

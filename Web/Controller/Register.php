@@ -26,13 +26,17 @@ function main()
             exit;
         } else
         {
-            $usernameInputErrorMessage = $result->message;
-            outputPage($usernameInputErrorMessage);
-            exit;
-        }
+            switch ($result->errorCode) 
+            {
+                case ErrorCode::UsernameTaken:
+                        $usernameInputErrorMessage = "Sorry, that username has already been taken. Please choose another.";
+                        break;
+                outputPage($usernameInputErrorMessage);
+                exit;
+            }
     }
-
     outputPage();
+    exit;
 }
 
 function outputPage($usernameInputErrorMessage = '')

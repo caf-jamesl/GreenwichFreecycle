@@ -13,10 +13,10 @@ function checkName(uname) {
 }
 
 // validate user name 
-function validate(uname) {
+function validateUsername(uname) {
     var usernameDiv = document.getElementById("usernameDiv");
     var iconSpan = document.getElementById("usernameIcon");
-    var message = document.getElementById("message");
+    var message = document.getElementById("usernameMessage");
     if (uname.length < 6) {
         usernameDiv.className = "form-group has-warning has-feedback";
         iconSpan.className = "glyphicon glyphicon-warning-sign form-control-feedback";
@@ -45,4 +45,32 @@ function validate(uname) {
             message.style.color = "green";
             return true;
     }
+}
+
+// validate password
+function validatePassword(password) {
+    return true;
+}
+
+// validate password
+function validateEmail(email) {
+    var message = document.getElementById("emailMessage");
+    var username = document.getElementById("usernameInput").value;
+    if (username === email) {
+        message.innerHTML = "Username and email address must be different";
+        message.style.color = "red";
+        return false;
+    }
+    message.innerHTML = "";
+    message.style.color = "green";
+    return true;
+}
+
+function validateForm(theForm) {
+    var valid = true;
+    if (!validateUsername(theForm.usernameInput.value)) valid = false;
+    if (!validatePassword(theForm.passwordInput.value)) valid = false;
+    if (!validateEmail(theForm.emailInput.value)) valid = false;
+    if (valid) return true;
+    else return false;
 }

@@ -9,4 +9,4 @@ City varchar(255),
 State varchar(255),
 Country varchar(2),
 PostCode varchar(255)
-)
+) ENGINE=MyISAM;

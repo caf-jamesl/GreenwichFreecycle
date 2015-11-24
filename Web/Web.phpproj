@@ -63,7 +63,7 @@
     <Content Include="Image\tick.gif" />
     <Content Include="packages.config" />
     <Content Include="Scripts\Custom\Image.js" />
-    <Content Include="Scripts\Custom\Username.js" />
+    <Content Include="Scripts\Custom\register.js" />
     <Content Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

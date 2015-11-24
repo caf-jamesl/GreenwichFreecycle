@@ -25,6 +25,8 @@ function main()
             $okayImages = $validation->validateImages($images);
             $advertManagement = new AdvertManagement;
             $advertManagement->addAdvert($_POST['advertTitleInput'], $_POST['advertDescriptionTextarea'], $okayImages);
+            header('Location: MyAdverts.php');
+            exit;
         }
         outputPage();
         exit;

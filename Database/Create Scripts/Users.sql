@@ -10,4 +10,4 @@ AddressId int,
 AccountStatusId int,
 FOREIGN KEY (AddressId) REFERENCES Addresses(AddressId),
 FOREIGN KEY (AccountStatusId) REFERENCES AccountStatus(AccountStatusId)
-)
+) ENGINE=MyISAM;
