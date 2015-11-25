@@ -7,6 +7,7 @@ require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 use GreenwichFreecycle\Web\Utilities\Security;
 use GreenwichFreecycle\Web\Utilities\Email;
 use GreenwichFreecycle\Web\Utilities\SessionManagement;
+use GreenwichFreecycle\Web\Utilities\AddressApiManagement;
 use GreenwichFreecycle\Web\Model\Result;
 use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Model\Enum\ErrorCode;
@@ -22,7 +23,7 @@ class UserManagement
         {
             return new Result(false, ErrorCode::PasswordIncorrect);
         }
-        if(!($user->AccountStatusId == AccountStatus::Confirmed))
+        if(($user->AccountStatusId == AccountStatus::Unconfirmed))
         {
             return new Result(false, ErrorCode::UserNotActivated);
         }
@@ -79,7 +80,6 @@ class UserManagement
 
     public function getUser($username)
     {
-        $database = null;
         $connection = ConnectionFactory::getFactory()->getConnection();
         $statement = $connection->prepare('select * from Users where Username = ?');
         $statement->bindValue(1, $username, \PDO::PARAM_STR);
@@ -101,32 +101,68 @@ class UserManagement
         $user = $sessionManagement->get('user');
         if($user->AddressId)
         {
-        updateAddress($user->AddressId, $postcode);
+        $this->updateAddress($user->AddressId, $postcode);
         } else
         {
-        $user->AddressId = addNewAddress($user->AddressId, $postcode);
+        $user->AddressId = $this->addNewAddress($postcode);
         }
+        $this->updateUser($title, $firstname, $lastname, $user->AddressId, AccountStatus::ReadyToPost, $user->UserId);
+        $sessionManagement->set('user', $this->getUser($user->Username));
+    }
+
+    public function getAddress($addressId)
+    {
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('update Users Set Title=?, FirstName=?, LastName=?, AddressId=? where UserId = ?');
+        $statement = $connection->prepare('select * from Addresses where AddressId = ?');
+        $statement->bindValue(1, $addressId, \PDO::PARAM_INT);
+        $database = new Database;
+        return $database->select($statement)[0];
+    }
+
+    private function updateUser($title, $firstname, $lastname, $addressId, $accountStatus, $userId)
+    {   
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('update Users Set Title=?, FirstName=?, LastName=?, AddressId=?, AccountStatusId=? where UserId = ?');
         $statement->bindValue(1, $title, \PDO::PARAM_STR);
         $statement->bindValue(2, $firstname, \PDO::PARAM_STR);
         $statement->bindValue(3, $lastname, \PDO::PARAM_STR);
-        $statement->bindValue(4, $user, \PDO::PARAM_INT);
-        $statement->bindValue(5, $user->AddressId, \PDO::PARAM_INT);
+        $statement->bindValue(4, $addressId, \PDO::PARAM_INT);
+        $statement->bindValue(5, $accountStatus, \PDO::PARAM_INT);
+        $statement->bindValue(6, $userId, \PDO::PARAM_INT);
         $database = new Database;
-        $database->insert($statement);
+        $database->update($statement);
     }
 
     private function updateAddress($addressId, $postcode)
-    {
+    {   
+        $addressApiManagement = new AddressApiManagement;
+        $result = $addressApiManagement->getAddress($postcode)['result'];
+        $longitude = ($result['longitude']);
+        $latitude = ($result['latitude']);
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('update Addresses Set PostCode=?, Longitude=?, Latitude=? where $addressId = ?');
+        $statement = $connection->prepare('update Addresses Set PostCode=?, Longitude=?, Latitude=? where addressId = ?');
         $statement->bindValue(1, $postcode, \PDO::PARAM_STR);
-        $statement->bindValue(2, $hashedPassword, \PDO::PARAM_STR);
-        $statement->bindValue(3, $email, \PDO::PARAM_STR);
-        $statement->bindValue(4, 1, \PDO::PARAM_INT);
+        $statement->bindValue(2, $longitude, \PDO::PARAM_STR);
+        $statement->bindValue(3, $latitude, \PDO::PARAM_STR);
+        $statement->bindValue(4, $addressId, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->update($statement);
+    }
+
+    private function addNewAddress($postcode)
+    {
+        $addressApiManagement = new AddressApiManagement;
+        $result = $addressApiManagement->getAddress($postcode)['result'];
+        $longitude = ($result['longitude']);
+        $latitude = ($result['latitude']);
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('insert into Addresses (Postcode, Longitude, Latitude) values (?, ?, ?)');
+        $statement->bindValue(1, $postcode, \PDO::PARAM_STR);
+        $statement->bindValue(2, $longitude, \PDO::PARAM_STR);
+        $statement->bindValue(3, $latitude, \PDO::PARAM_STR);
         $database = new Database;
         $database->insert($statement);
+        return $connection->lastInsertId();
     }
         
     private function addUser($username, $hashedPassword, $email)

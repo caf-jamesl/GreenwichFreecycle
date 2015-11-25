@@ -60,6 +60,7 @@
     <Folder Include="Properties" />
     <Folder Include="Create Scripts" />
     <Folder Include="Insert Scripts" />
+    <Folder Include="Deployment" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Create Scripts\Users.sql" />
@@ -68,5 +69,7 @@
     <None Include="Create Scripts\Adverts.sql" />
     <None Include="Create Scripts\Images.sql" />
     <None Include="Insert Scripts\AccountStatus.sql" />
+    <None Include="Deployment\Make.sql" />
+    <None Include="Deployment\Drop.sql" />
   </ItemGroup>
 </Project>

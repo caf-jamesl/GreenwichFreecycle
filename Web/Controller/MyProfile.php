@@ -8,7 +8,9 @@ require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
+use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
+use GreenwichFreecycle\Web\Utilities\SessionManagement;
 
 main();
 
@@ -16,19 +18,32 @@ function main()
 {
     $userManagement = new UserManagement;
     if ($userManagement->isLoggedIn())
-    {        
+    {    
+        $sessionManagement = new SessionManagement;
+        $user = $sessionManagement->get('user'); 
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $title = $_POST['titleInput'];
-            $firstname = $_POST['firstnameInput'];
-            $lastname = $_POST['lastnameInput'];
+            $firstname = $_POST['firstNameInput'];
+            $lastname = $_POST['lastNameInput'];
             $postcode = $_POST['postcodeInput'];
             $userManagement->updateCurrentUser($title, $firstname, $lastname, $postcode);
-            header('Location: MyAdverts.php');
+            header('Location: MyProfile.php');
             exit;
         }
-        outputPage();
-        exit;
+        elseif($user->AccountStatusId == AccountStatus::ReadyToPost)
+        {
+            $menuBar = createMenuBar(true);
+        } else
+        {
+            $menuBar = createMenuBar(false);
+        }
+            $title = new TemplateParameter('title', $user->Title);
+            $firstname = new TemplateParameter('firstname', $user->FirstName);
+            $lastname = new TemplateParameter('lastname', $user->LastName);
+            $address = $userManagement->getAddress($user->AddressId);
+            $postcode = new TemplateParameter('postcode', $address->PostCode);
+            outputPage($menuBar, $title, $firstname, $lastname, $postcode);
     }
     else
     {
@@ -37,10 +52,35 @@ function main()
     }
 }
 
-function outputPage()
+function createMenuBar($CanPost)
 {
+if($CanPost)
+{
+    $menuBar = '<ul class="nav nav-tabs">
+                    <li class="active"><a href="../Controller/MyProfile.php">Profile</a></li>
+                    <li><a href="../Controller/Messages.php">Messages</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="../Controller/MyAdverts.php">My Adverts<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="../Controller/AddAdvert.php">Add Advert</a></li>
+                        </ul>
+                    </li>
+                 </ul>';
+    return new TemplateParameter('menuBar', $menuBar);
+} else
+{
+    $menuBar =  '<ul class="nav nav-tabs">
+                    <li class="active"><a href="../Controller/MyProfile.php">Profile</a></li>
+                </ul>';
+    return new TemplateParameter('menuBar', $menuBar);
+}
+}
+
+function outputPage($menuBar, $title, $firstname, $lastname, $postcode)
+{
+    $templateParameters = array($menuBar, $title, $firstname, $lastname, $postcode);
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('myprofile.html', null);
+    echo $pageManagement->handlePage('myprofile.html', $templateParameters);
 }
 
 ?>

@@ -3,6 +3,7 @@
 UserId int PRIMARY KEY AUTO_INCREMENT,
 Username varchar(255) UNIQUE,
 Password varchar(255),
+Title varchar(255),
 FirstName varchar(255),
 LastName varchar(255),
 Email varchar(255),

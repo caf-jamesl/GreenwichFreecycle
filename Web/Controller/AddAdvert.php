@@ -8,15 +8,18 @@ require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
 use GreenwichFreecycle\Web\Business\AdvertManagement;
+use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 use GreenwichFreecycle\Web\Utilities\Validation;
+use GreenwichFreecycle\Web\Utilities\SessionManagement;
 
 main();
 
 function main()
 {
-    $userManagement = new UserManagement;
-    if ($userManagement->isLoggedIn())
+    $sessionManagement = new SessionManagement;
+    $user = $sessionManagement->get('user');
+    if ($user->AccountStatusId == AccountStatus::ReadyToPost)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {

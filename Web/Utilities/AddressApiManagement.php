@@ -1,5 +1,9 @@
 <?php
 
+namespace GreenwichFreecycle\Web\Utilities;
+
+require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
+
 class AddressApiManagement
 {
      public function getAddress($postcode)

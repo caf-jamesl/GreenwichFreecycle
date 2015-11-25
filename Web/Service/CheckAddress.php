@@ -10,6 +10,7 @@ use GreenwichFreecycle\Web\Utilities\AddressApiManagement;
 
 header('Content-type: text/plain');
 $addressApiManagement = new AddressApiManagement;
+$postcode = $_GET['postcode'];
 $result = $addressApiManagement->getAddress($postcode);
 if(!($result['status'] == 200))
 {

@@ -44,6 +44,7 @@
     <Compile Include="Utilities\Autoloader.php" />
     <Compile Include="Utilities\Email.php" />
     <Compile Include="Utilities\PageManagement.php" />
+    <Compile Include="Utilities\ReCaptchaApiManagement.php" />
     <Compile Include="Utilities\Security.php" />
     <Compile Include="Utilities\SessionManagement.php" />
     <Compile Include="Utilities\Validation.php" />
