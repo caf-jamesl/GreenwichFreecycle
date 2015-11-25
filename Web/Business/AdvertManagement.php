@@ -36,13 +36,29 @@ class AdvertManagement
         return $database->select($statement);
     }
 
+    public function searchAdverts($keywords)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('SELECT * FROM Adverts WHERE MATCH(Title, Description) AGAINST (? IN BOOLEAN MODE)');
+        $statement->bindValue(1, $keywords, \PDO::PARAM_STR);
+        $database = new Database;
+        return $database->select($statement);
+    }
+
     public function createAdvertHtml($advert)
     {
-        $firstImage = $this->getImages($advert->AdvertId)[0]->Location;
+        $firstImage =  $this->getImages($advert->AdvertId)[0]->Location;
+        if($firstImage)
+        {
+        $firstImage = '../../..' . $firstImage;
+        } else
+        {
+        $firstImage = '../Image/no-image.gif';
+        }
         return "
         <div class=\"search-result row\">
             <div class=\"col-xs-12 col-sm-12 col-md-3\">
-                 <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$firstImage\" alt=\"Lorem ipsum\" /></a>
+                 <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"$firstImage\" alt=\"Lorem ipsum\" /></a>
             </div>
             <div class=\"col-xs-12 col-sm-12 col-md-2\">
                 <ul class=\"meta-search\">

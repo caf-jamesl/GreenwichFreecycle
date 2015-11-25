@@ -56,8 +56,7 @@ class UserManagement
     {
         if (!$this->getUser($username))
         {
-            print 'james';
-            return new Result(false, 'Sorry, that username cannot be found in our database. Please check your it and try again.');
+            return new Result(false, ErrorCode::UsernameNotFound);
         }
         $correctActivationCode = $this->getActivationCode($username);
         if ($correctActivationCode === $activationCode)
@@ -65,7 +64,7 @@ class UserManagement
             $this->actvateUser($username);
             return new Result(true);
         }
-        return new Result(false, 'Sorry, that activation code was incorrect. Please check it and try again');
+        return new Result(false, ErrorCode::ActivationCodeIncorrect);
     }
 
     public function isLoggedIn()
@@ -88,6 +87,48 @@ class UserManagement
         return $database->select($statement)[0];
     }
 
+    public function loginWithoutValidation($username)
+    {
+        $user = $this->getUser($username);
+        $sessionManagement = new SessionManagement;
+        $sessionManagement->set('user', $user);
+        return new Result(true);
+    }
+
+    public function updateCurrentUser($title, $firstname, $lastname, $postcode)
+    {
+        $sessionManagement = new SessionManagement;
+        $user = $sessionManagement->get('user');
+        if($user->AddressId)
+        {
+        updateAddress($user->AddressId, $postcode);
+        } else
+        {
+        $user->AddressId = addNewAddress($user->AddressId, $postcode);
+        }
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('update Users Set Title=?, FirstName=?, LastName=?, AddressId=? where UserId = ?');
+        $statement->bindValue(1, $title, \PDO::PARAM_STR);
+        $statement->bindValue(2, $firstname, \PDO::PARAM_STR);
+        $statement->bindValue(3, $lastname, \PDO::PARAM_STR);
+        $statement->bindValue(4, $user, \PDO::PARAM_INT);
+        $statement->bindValue(5, $user->AddressId, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->insert($statement);
+    }
+
+    private function updateAddress($addressId, $postcode)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('update Addresses Set PostCode=?, Longitude=?, Latitude=? where $addressId = ?');
+        $statement->bindValue(1, $postcode, \PDO::PARAM_STR);
+        $statement->bindValue(2, $hashedPassword, \PDO::PARAM_STR);
+        $statement->bindValue(3, $email, \PDO::PARAM_STR);
+        $statement->bindValue(4, 1, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->insert($statement);
+    }
+        
     private function addUser($username, $hashedPassword, $email)
     {
         $connection = ConnectionFactory::getFactory()->getConnection();

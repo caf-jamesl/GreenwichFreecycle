@@ -25,7 +25,7 @@ function main()
     $result = $userManagement->login($username, $password);
     if($result->worked)
     {
-        header('Location: MyAccount.php');
+        header('Location: MyProfile.php');
         exit();
     } else
     {

@@ -30,7 +30,7 @@ function main()
 
 function outputPage($error)
 {
-    $templateParameters = array(new TemplateParameter(errorMessage, $error));
+    $templateParameters = array(new TemplateParameter('errorMessage', $error));
     $pageManagement = new PageManagement;
     echo $pageManagement->handlePage('error.html', $templateParameters);
 }

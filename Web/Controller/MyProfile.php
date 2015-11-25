@@ -7,9 +7,8 @@ error_reporting(0);
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
-use GreenwichFreecycle\Web\Business\AdvertManagement;
+use GreenwichFreecycle\Web\Model\TemplateParameter;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
-use GreenwichFreecycle\Web\Utilities\Validation;
 
 main();
 
@@ -17,14 +16,14 @@ function main()
 {
     $userManagement = new UserManagement;
     if ($userManagement->isLoggedIn())
-    {
+    {        
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $validation = new Validation;
-            $images = $_FILES['fileInput'];
-            $okayImages = $validation->validateImages($images);
-            $advertManagement = new AdvertManagement;
-            $advertManagement->addAdvert($_POST['advertTitleInput'], $_POST['advertDescriptionTextarea'], $okayImages);
+            $title = $_POST['titleInput'];
+            $firstname = $_POST['firstnameInput'];
+            $lastname = $_POST['lastnameInput'];
+            $postcode = $_POST['postcodeInput'];
+            $userManagement->updateCurrentUser($title, $firstname, $lastname, $postcode);
             header('Location: MyAdverts.php');
             exit;
         }
@@ -41,7 +40,7 @@ function main()
 function outputPage()
 {
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('addadvert.html', null);
+    echo $pageManagement->handlePage('myprofile.html', null);
 }
 
 ?>

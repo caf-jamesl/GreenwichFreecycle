@@ -2,12 +2,13 @@
 
 namespace GreenwichFreecycle\Web\Controller;
 
-#error_reporting(0);
+error_reporting(0);
 
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
+use GreenwichFreecycle\Web\Model\Enum\ErrorCode;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 
 main();
@@ -16,26 +17,38 @@ function main()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
+        $username = trim($_POST['usernameInput']);
+        $code = trim($_POST['codeInput']);
         $userManagement = new UserManagement();
-        $result = $userManagement->activate($_POST['usernameInput'], $_POST['codeInput']);
+        $result = $userManagement->activate($username, $code);
         if($result->worked)
         {
-            $userManagement->login($username, $password);
-            header('Location: MyAccount.php');
+            $userManagement->loginWithoutValidation($username);
+            header('Location: MyProfile.php');
             exit;
         } else
         {
-            $usernameInputErrorMessage = $result->message;
-            outputPage('','', $usernameInputErrorMessage);
+            switch ($result->errorCode) 
+            {
+                case ErrorCode::UsernameNotFound:
+                     $errorMessage = 'Sorry, that username cannot be found in our database. Please check it and try again.';
+                     break;
+                case ErrorCode::ActivationCodeIncorrect:
+                     $errorMessage = 'Sorry, that activation code was incorrect. Please check it and try again';
+                     break;
+                outputPage($errorMessage);
+                exit;
+            }
+            outputPage('','', $errorMessage);
             exit;
         }
     }
     outputPage($_GET['username'], $_GET['activationCode'], '');
 }
 
-function outputPage($username = '', $activationCode = '', $usernameInputErrorMessage = '')
+function outputPage($username = '', $activationCode = '', $errorMessage = '')
 {
-    $templateParameters = array(new TemplateParameter(activationCode, $activationCode), new TemplateParameter(username, $username), new TemplateParameter(usernameInputErrorMessage, $usernameInputErrorMessage));
+    $templateParameters = array(new TemplateParameter('activationCode', $activationCode), new TemplateParameter('username', $username), new TemplateParameter('errorMessage', $errorMessage));
     $pageManagement = new PageManagement;
     echo $pageManagement->handlePage('activation.html', $templateParameters);
 }

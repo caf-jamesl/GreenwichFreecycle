@@ -9,16 +9,18 @@
     <div class="container">
         <div class="row">
             <h2>Search Greenwich Freecycle</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="  search-query form-control" placeholder="Search" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button">
-                            <span class=" glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
+            <form action="../Controller/SearchResults.php" method="get">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="search-query form-control" placeholder="Search" name="keywords" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">
+                                <span class=" glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

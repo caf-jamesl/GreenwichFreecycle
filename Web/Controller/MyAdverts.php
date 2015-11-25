@@ -41,7 +41,7 @@ function createSearchResults($adverts)
      {
      $html = $html . $advertManagement->createAdvertHtml($advert);
      }
-    return array(new TemplateParameter(searchResults, $html));
+    return array(new TemplateParameter('searchResults', $html));
 }
 
 function outputPage($templateParameters = '')

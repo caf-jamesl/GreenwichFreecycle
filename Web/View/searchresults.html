@@ -1,9 +1,30 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb">
 <head>
-    <title></title>
+    <title>Greenwich Freecycle Search</title>
+    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
 </head>
 <body>
-
+    {{topNav}}
+    <div class="container">
+        <div class="row">
+            <h2>Search Greenwich Freecycle</h2>
+            <form action="../Controller/SearchResults.php" method="get">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="search-query form-control" placeholder="Search" name="keywords" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">
+                                <span class=" glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        {{searchResults}}
+    </div>
 </body>
 </html>

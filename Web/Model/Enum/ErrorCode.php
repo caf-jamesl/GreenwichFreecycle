@@ -9,6 +9,7 @@ abstract class ErrorCode
     const UserNotFound = 3;
     const UsernameTaken = 4;
     const UsernameNotFound = 5;
+    const ActivationCodeIncorrect = 6;
 }
 
 ?>

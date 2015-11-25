@@ -17,11 +17,13 @@ function main()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
+        $username = trim($_POST['usernameInput']);
+        $password = trim($_POST['passwordInput']);
+        $email = trim($_POST['emailInput']);
         $userManagement = new UserManagement();
-        $result = $userManagement->register($_POST['usernameInput'], $_POST['passwordInput'], $_POST['emailInput']);
+        $result = $userManagement->register($username, $password, $email);
         if($result->worked)
         {
-            $usernameInputErrorMessage = '';
             header('Location: RegisterThankYou.php');
             exit;
         } else
@@ -29,11 +31,12 @@ function main()
             switch ($result->errorCode) 
             {
                 case ErrorCode::UsernameTaken:
-                        $usernameInputErrorMessage = "Sorry, that username has already been taken. Please choose another.";
+                        $usernameInputErrorMessage = 'Sorry, that username has already been taken. Please choose another.';
                         break;
                 outputPage($usernameInputErrorMessage);
                 exit;
             }
+        }
     }
     outputPage();
     exit;
@@ -41,7 +44,7 @@ function main()
 
 function outputPage($usernameInputErrorMessage = '')
 {
-    $templateParameters = array(new TemplateParameter(usernameInputErrorMessage, $usernameInputErrorMessage));
+    $templateParameters = array(new TemplateParameter('usernameInputErrorMessage', $usernameInputErrorMessage));
     $pageManagement = new PageManagement;
     echo $pageManagement->handlePage('register.html', $templateParameters);
 }
