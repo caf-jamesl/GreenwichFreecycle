@@ -27,12 +27,16 @@ class AdvertManagement
         $statement->bindValue(3, $advertId, \PDO::PARAM_INT);
         $database = new Database;
         $database->update($statement);
-        return $connection->lastInsertId();
         $this->insertImageLocations($advertId, $images);
     }
 
-    public function removeAdvert()
+    public function removeAdvert($advertId)
     {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('delete from Adverts where AdvertId = ?');
+        $statement->bindValue(1, $advertId, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->delete($statement);
     }
 
      public function RemoveImage($imageId)
@@ -108,7 +112,7 @@ class AdvertManagement
         return "
         <div class=\"search-result row\">
             <div class=\"col-xs-12 col-sm-12 col-md-3\">
-                 <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"$firstImage\" alt=\"Lorem ipsum\" /></a>
+                 <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"$firstImage\" alt=\"User uploaded image of $advert->Title\" /></a>
             </div>
             <div class=\"col-xs-12 col-sm-12 col-md-2\">
                 <ul class=\"meta-search\">

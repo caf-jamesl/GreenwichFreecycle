@@ -26,6 +26,16 @@ class Database
         }
     }
 
+    public function delete($statement)
+    {
+        try{
+            $statement->execute();
+        }
+        catch (Exception $ex){
+            echo ($ex->getMessage);
+        }
+    }
+
     public function update($statement)
     {
         try{

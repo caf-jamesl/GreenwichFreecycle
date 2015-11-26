@@ -29,6 +29,7 @@
     <Compile Include="Controller\MyProfile.php" />
     <Compile Include="Controller\MyAdverts.php" />
     <Compile Include="Controller\RegisterThankYou.php" />
+    <Compile Include="Controller\RemoveAdvert.php" />
     <Compile Include="Controller\RemoveConfirm.php" />
     <Compile Include="Controller\SearchResults.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
