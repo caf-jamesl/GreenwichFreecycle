@@ -24,11 +24,20 @@ function main()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
+            $advertTitle =  $_POST['advertTitleInput'];
+            $advertDescription = $_POST['advertDescriptionTextarea'];
             $validation = new Validation;
+            $result = $validation->validateAdvert($advertTitle, $advertDescription);
+            if(!$result)
+            {
+            $templateParameters = array(new TemplateParameter('advertErrorMessage', 'Please give the advert a title and description'));
+            outputPage($templateParameters);
+            exit;
+            }
             $images = $_FILES['fileInput'];
             $okayImages = $validation->validateImages($images);
             $advertManagement = new AdvertManagement;
-            $advertManagement->updateAdvert($_POST['advertIdHidden'], $_POST['advertTitleInput'], $_POST['advertDescriptionTextarea'], $okayImages);
+            $advertManagement->updateAdvert($_POST['advertIdHidden'], $advertTitle, $advertDescription, $okayImages);
             header('Location: MyAdverts.php');
             exit;
         }
@@ -49,7 +58,8 @@ function main()
         $advertTitle = new TemplateParameter('advertTitle', $advert->Title);
         $advertDescription = new TemplateParameter('advertDescription', $advert->Description);
         $advertId = new TemplateParameter('advertId', $advert->AdvertId);
-        outputPage(array($imageHtml, $advertTitle, $advertDescription, $advertId));
+        $advertErrorMessage = new TemplateParameter('advertErrorMessage', '');
+        outputPage(array($imageHtml, $advertTitle, $advertDescription, $advertId, $advertErrorMessage));
         exit;
     }
     else
@@ -66,7 +76,7 @@ function getImageHtml($advert)
     foreach ($images as $image)
     {
     $html = $html . "<div class=\"col-xs-12 col-sm-12 col-md-3\">
-                        <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"Lorem ipsum\" /></a>
+                        <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"User uploaded image of $advert->Title\" /></a>
                         <a href=\"../Controller/RemoveConfirm.php?advertId=$advert->AdvertId&amp;imageId=$image->ImageId\">Remove image</a>
                      </div>";
     }

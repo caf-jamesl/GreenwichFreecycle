@@ -28,7 +28,6 @@
     <Compile Include="Controller\Messages.php" />
     <Compile Include="Controller\MyProfile.php" />
     <Compile Include="Controller\MyAdverts.php" />
-    <Compile Include="Controller\RegisterThankYou.php" />
     <Compile Include="Controller\RemoveAdvert.php" />
     <Compile Include="Controller\RemoveConfirm.php" />
     <Compile Include="Controller\SearchResults.php" />
@@ -92,7 +91,6 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="View\registerthankyou.html" />
     <Content Include="View\removeconfirm.html" />
     <Content Include="View\searchresults.html" />
     <Content Include="View\topnavloggedout.html" />

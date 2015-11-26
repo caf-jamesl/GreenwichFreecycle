@@ -18,10 +18,21 @@ class Validation
     {
     }
 
+    public function validateAdvert($title, $description)
+    {
+    if(($title == '') || ($description == ''))
+    {
+        return FALSE;
+    } else
+    {
+        return TRUE;
+    }
+    }
+
     public function validateImages($images)
     {
         $valid_formats = array('jpg', 'png', 'gif', 'bmp');
-        $max_file_size = 1024*100; //100 kb
+        $max_file_size = 1024*3000; //3000 kb
         $path = '/ImageUploads/'; // Upload directory
         $okayImages=array();
         foreach ($images['name'] as $f => $name) 

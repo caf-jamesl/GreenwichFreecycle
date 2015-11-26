@@ -39,7 +39,7 @@ function main()
         $result = $userManagement->register($username, $password, $email);
         if($result->worked)
         {
-            header('Location: RegisterThankYou.php');
+            header("Location: Activation.php?username=$username");
             exit;
         } else
         {
