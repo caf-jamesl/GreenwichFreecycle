@@ -18,6 +18,17 @@ class Validation
     {
     }
 
+    public function validateRegister($username, $email)
+    {
+    if(($username == '') || ($email == '') || ($username==$email))
+    {
+        return FALSE;
+    } else
+    {
+        return TRUE;
+    }
+    }
+
     public function validateAdvert($title, $description)
     {
     if(($title == '') || ($description == ''))

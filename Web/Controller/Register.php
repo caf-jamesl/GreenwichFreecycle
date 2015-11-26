@@ -12,6 +12,7 @@ use GreenwichFreecycle\Web\Model\TemplateParameter;
 use GreenwichFreecycle\Web\Model\Enum\ErrorCode;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 use GreenwichFreecycle\Web\Utilities\ReCaptchaApiManagement;
+use GreenwichFreecycle\Web\Utilities\Validation;
 
 main();
 
@@ -35,6 +36,14 @@ function main()
         $username = trim($_POST['usernameInput']);
         $password = trim($_POST['passwordInput']);
         $email = trim($_POST['emailInput']);
+        $validation = new Validation;
+        $result = $validation->validateRegister($username, $email);
+        if(!$result)
+        {
+            $registerErrorMessage = 'Please check all fields are filled out correctly.';
+            outputPage($registerErrorMessage);
+            exit;
+        }
         $userManagement = new UserManagement();
         $result = $userManagement->register($username, $password, $email);
         if($result->worked)
