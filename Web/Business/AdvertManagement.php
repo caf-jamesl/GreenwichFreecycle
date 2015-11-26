@@ -18,9 +18,31 @@ class AdvertManagement
         $this->insertImageLocations($advertId, $images);
     }
 
+    public function updateAdvert($advertId, $title, $description, $images)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('Update Adverts Set Title = ?, Description = ? where advertId = ?');
+        $statement->bindValue(1, $title, \PDO::PARAM_STR);
+        $statement->bindValue(2, $description, \PDO::PARAM_STR);
+        $statement->bindValue(3, $advertId, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->update($statement);
+        return $connection->lastInsertId();
+        $this->insertImageLocations($advertId, $images);
+    }
+
     public function removeAdvert()
     {
     }
+
+     public function RemoveImage($imageId)
+     {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('Delete from Images where ImageId = ?');
+        $statement->bindValue(1, $imageId, \PDO::PARAM_INT);
+        $database = new Database;
+        $database->insert($statement);
+     }
 
     public function getAdverts($userId)
     {
@@ -43,6 +65,15 @@ class AdvertManagement
         $statement->bindValue(1, $advertId, \PDO::PARAM_INT);
         $database = new Database;
         return $database->select($statement);
+    }
+
+    public function getImage($imageId)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('select * from Images where ImageId = ?');
+        $statement->bindValue(1, $imageId, \PDO::PARAM_INT);
+        $database = new Database;
+        return $database->select($statement)[0];
     }
 
     public function searchAdverts($keywords)

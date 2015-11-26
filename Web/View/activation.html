@@ -8,9 +8,7 @@
     {{topNav}}
     <h3>Please activate you account</h3>
     <h5>Please enter your details from your activation email</h5>
-    &nbsp;
-    &nbsp;
-    &nbsp;
+    <div><br /><br /></div>
     <form class="form-horizontal" action="../Controller/Activation.php" method="post">
         <div class="form-group">
             <label for="usernameInput" class="col-sm-2 control-label">Username</label>
@@ -29,7 +27,7 @@
                 <button type="submit" class="btn btn-default" value="post">Activate</button>
             </div>
         </div>
-        <span style="color: red;" id="usernameMessage">{{errorMessage}}</span>
+        <div><span style="color: red;" id="usernameMessage">{{errorMessage}}</span></div>
     </form>
 </body>
 </html>
