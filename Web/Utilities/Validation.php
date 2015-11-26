@@ -49,7 +49,7 @@ class Validation
                     if (move_uploaded_file($images['tmp_name'][$f], dirname(dirname(dirname(__DIR__))).$pathAndName))
                     {
                         array_push($okayImages, $pathAndName);
-                        echo "Uploaded";
+                       // echo "Uploaded";
                     }
                 }
             }

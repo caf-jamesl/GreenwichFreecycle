@@ -2,7 +2,7 @@
 
 namespace GreenwichFreecycle\Web\Controller;
 
-error_reporting(0);
+#error_reporting(0);
 
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
@@ -11,6 +11,7 @@ use GreenwichFreecycle\Web\Business\AdvertManagement;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
 use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
+use GreenwichFreecycle\Web\Utilities\Validation;
 use GreenwichFreecycle\Web\Utilities\SessionManagement;
 
 main();
@@ -21,10 +22,23 @@ function main()
     $user = $sessionManagement->get('user');
     if ($user->AccountStatusId == AccountStatus::ReadyToPost)
     {
+        $advertId = $_GET['advertId'];
+        if(!$advertId)
+        {
+            header('Location: MyAdverts.php');
+            exit;
+        }
         $advertManagement = new AdvertManagement;
-        $adverts = $advertManagement->getAdverts($user->UserId);
-        $searchResults = createSearchResults($adverts);
-        outputPage($searchResults);
+        $advert = $advertManagement->GetAdvert($advertId);
+        if ($advert->UserId != $user->UserId)
+        {
+            echo $advert->UserId . '+' . $user->UserId;
+            header('Location: MyAdverts.php');
+            exit;
+        }
+        $advertTitle = new TemplateParameter('advertTitle', $advert->Title);
+        $advertDescription = new TemplateParameter('advertDescription', $advert->Description);
+        outputPage(array($advertTitle, $advertDescription));
         exit;
     }
     else
@@ -34,20 +48,10 @@ function main()
     }
 }
 
-function createSearchResults($adverts)
-{
-     $advertManagement = new AdvertManagement;
-     foreach ($adverts as $advert)
-     {
-     $html = $html . $advertManagement->createAdvertHtml($advert, true);
-     }
-    return array(new TemplateParameter('searchResults', $html));
-}
-
 function outputPage($templateParameters = '')
 {
     $pageManagement = new PageManagement;
-    echo $pageManagement->handlePage('myadverts.html', $templateParameters);
+    echo $pageManagement->handlePage('editadvert.html', $templateParameters);
 }
 
 ?>

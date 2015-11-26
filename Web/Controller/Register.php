@@ -2,13 +2,14 @@
 
 namespace GreenwichFreecycle\Web\Controller;
 
-#error_reporting(0);
+error_reporting(0);
 
 require_once (dirname(__DIR__). '/Utilities/Autoloader.php');
 
 use GreenwichFreecycle\Web\Business\UserManagement;
 use GreenwichFreecycle\Web\Model\Result;
 use GreenwichFreecycle\Web\Model\TemplateParameter;
+use GreenwichFreecycle\Web\Model\Enum\ErrorCode;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 use GreenwichFreecycle\Web\Utilities\ReCaptchaApiManagement;
 
@@ -22,7 +23,7 @@ function main()
         {
          $errorMessage = 'Please complete the reCAPTCHA';
          outputPage($errorMessage);
-        exit;
+         exit;
         }
         $reCaptchaApiManagement = new ReCaptchaApiManagement;
         if (!($reCaptchaApiManagement->IsUserOkay($_POST['g-recaptcha-response'])))

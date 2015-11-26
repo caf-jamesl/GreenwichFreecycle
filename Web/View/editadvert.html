@@ -1,39 +1,32 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb">
 <head>
-    <title>Greenwich Freecycle Add New</title>
+    <title>Greenwich Freecycle Edit Advert</title>
     <link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="../Content/Custom/site.css"/>
+    <link rel="stylesheet" href="../Content/Custom/site.css" />
     <script src="../Scripts/jquery-2.1.4.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-{{topNav}}
-<ul class="nav nav-tabs">
-    <li><a href="../Controller/MyProfile.php">Profile</a></li>
-    <li><a href="../Controller/Messages.php">Messages</a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" href="../Controller/MyAdverts.php">My Adverts<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li class="active"><a href="../Controller/AddAdvert.php">Add Advert</a></li>
-        </ul>
-    </li>
-</ul>
+    {{topNav}}
+    <ul class="nav nav-tabs">
+        <li><a href="../Controller/MyAdverts.php">Back to my adverts</a></li>
+    </ul>
     <div>
         <br />
         <br />
     </div>
-    <form action="../Controller/AddAdvert.php" class="form-horizontal" enctype="multipart/form-data" method="post">
+    <form action="../Controller/EditAdvert.php" class="form-horizontal" enctype="multipart/form-data" method="post">
         <div class="form-group">
             <label for="advertTitleInput" class="col-sm-2 control-label">Advert title</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="advertTitleInput" name="advertTitleInput" placeholder="Advert title" required="required" />
+                <input type="text" class="form-control" id="advertTitleInput" name="advertTitleInput" placeholder="Advert title" required="required" value="{{advertTitle}}" />
             </div>
         </div>
         <div class="form-group">
             <label for="advertDescriptionTextarea" class="col-sm-2 control-label">Advert description</label>
             <div class="col-sm-10">
-                <textarea class="form-control" cols="40" id="advertDescriptionTextarea" name="advertDescriptionTextarea" placeholder="Advert description" required="required" rows="5" type="text"> </textarea>
+                <textarea class="form-control" cols="40" id="advertDescriptionTextarea" name="advertDescriptionTextarea" placeholder="Advert description" required="required" rows="5" type="text">{{advertDescription}}</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -46,10 +39,10 @@
         <div class="form-group" id="gallery"></div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default" value="post">Add Advert</button>
+                <button type="submit" class="btn btn-default" value="post">Edit Advert</button>
             </div>
         </div>
     </form>
-<script type="text/javascript" src="../Scripts/Custom/Image.js"></script>
+    <script type="text/javascript" src="../Scripts/Custom/Image.js"></script>
 </body>
 </html>

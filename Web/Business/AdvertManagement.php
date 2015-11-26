@@ -27,6 +27,15 @@ class AdvertManagement
         return $this->getAdvertsByUserId($userId);
     }
 
+    public function getAdvert($advertId)
+    {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('select * from Adverts where AdvertId = ?');
+        $statement->bindValue(1, $advertId, \PDO::PARAM_INT);
+        $database = new Database;
+        return $database->select($statement)[0];
+    }
+
     public function getImages($advertId)
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
@@ -45,7 +54,7 @@ class AdvertManagement
         return $database->select($statement);
     }
 
-    public function createAdvertHtml($advert)
+    public function createAdvertHtml($advert, $editable)
     {
         $firstImage =  $this->getImages($advert->AdvertId)[0]->Location;
         if($firstImage)
@@ -55,6 +64,16 @@ class AdvertManagement
         {
         $firstImage = '../Image/no-image.gif';
         }
+        $insertedStamp = new \DateTime($advert->InsertedStamp);
+        $date = date_format($insertedStamp, 'd/m/y');
+        $time = date_format($insertedStamp, 'g:i A');
+        if($editable)
+        {
+        $link = "../Controller/EditAdvert.php?advertId=$advert->AdvertId";
+        } else
+        {
+         $link = '#';
+        }
         return "
         <div class=\"search-result row\">
             <div class=\"col-xs-12 col-sm-12 col-md-3\">
@@ -62,13 +81,12 @@ class AdvertManagement
             </div>
             <div class=\"col-xs-12 col-sm-12 col-md-2\">
                 <ul class=\"meta-search\">
-                    <li><i class=\"glyphicon glyphicon-calendar\"></i> <span>02/15/2014</span></li>
-                    <li><i class=\"glyphicon glyphicon-time\"></i> <span>4:28 pm</span></li>
-                    <li><i class=\"glyphicon glyphicon-tags\"></i> <span>People</span></li>
+                    <li><i class=\"glyphicon glyphicon-calendar\"></i> <span>$date</span></li>
+                    <li><i class=\"glyphicon glyphicon-time\"></i> <span>$time</span></li>
                 </ul>
             </div>
             <div class=\"col-xs-12 col-sm-12 col-md-7 excerpet\">
-                <h3><a href=\"#\" title=\"\">$advert->Title</a></h3>
+                <h3><a href=\"$link\" title=\"Click to edit advert\">$advert->Title</a></h3>
                 <p>$advert->Description</p>
             </div>
             <span class=\"clearfix borda\"></span>
@@ -78,10 +96,11 @@ class AdvertManagement
     private function insertAdvert($title, $description, $userId)
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('insert into Adverts (Title, Description, UserId) values (?, ?, ?)');
+        $statement = $connection->prepare('insert into Adverts (Title, Description, InsertedStamp, UserId) values (?, ?, ?, ?)');
         $statement->bindValue(1, $title, \PDO::PARAM_STR);
         $statement->bindValue(2, $description, \PDO::PARAM_STR);
-        $statement->bindValue(3, $userId, \PDO::PARAM_INT);
+        $statement->bindValue(3, date("Y-m-d H:i:s"), \PDO::PARAM_STR);
+        $statement->bindValue(4, $userId, \PDO::PARAM_INT);
         $database = new Database;
         $database->insert($statement);
         return $connection->lastInsertId();

@@ -14,12 +14,16 @@ main();
 
 function main()
 {
-    $keywords = $_GET['keywords'];
-    $keywords = str_replace(" ", "*, ", $keywords);
+    $keywords = trim($_GET['keywords']) . '*';
+    $numberOfResults = $_GET['resultsNumberSelect'];
+    $keywords = str_replace(' ', '*, ', $keywords);
     $advertManagement = new AdvertManagement;
     $results = $advertManagement->searchAdverts($keywords);
+    $results = array_slice($results, 0, $numberOfResults);
     $searchResultsHtml = createSearchResults($results);
-    outputPage($searchResultsHtml);
+    $searchNumber = new TemplateParameter('searchNumber', count($results));
+    $searchKeywords = new TemplateParameter('searchKeywords', trim($_GET['keywords']));
+    outputPage(array($searchResultsHtml, $searchNumber, $searchKeywords));
 }
 
 function createSearchResults($adverts)
@@ -27,13 +31,13 @@ function createSearchResults($adverts)
      $advertManagement = new AdvertManagement;
      foreach ($adverts as $advert)
      {
-     $html = $html . $advertManagement->createAdvertHtml($advert);
+     $html = $html . $advertManagement->createAdvertHtml($advert, false);
      }
      if (!$html)
      {
      $html = '<br/>Sorry, no results have been found. Please try a different search.';
      }
-    return array(new TemplateParameter('searchResults', $html));
+    return new TemplateParameter('searchResults', $html);
 }
 
 function outputPage($templateParameters = '')

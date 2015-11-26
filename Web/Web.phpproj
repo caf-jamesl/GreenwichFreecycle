@@ -21,6 +21,7 @@
     <Compile Include="Business\UserManagement.php" />
     <Compile Include="Controller\Activation.php" />
     <Compile Include="Controller\AddAdvert.php" />
+    <Compile Include="Controller\EditAdvert.php" />
     <Compile Include="Controller\Error.php" />
     <Compile Include="Controller\Index.php" />
     <Compile Include="Controller\Logout.php" />
@@ -76,6 +77,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="View\activation.html" />
     <Content Include="View\addadvert.html" />
+    <Content Include="View\editadvert.html" />
     <Content Include="View\error.html" />
     <Content Include="View\index.html" />
     <Content Include="View\logout.html" />
@@ -92,6 +94,7 @@
     <Content Include="View\searchresults.html" />
     <Content Include="View\topnavloggedout.html" />
     <Content Include="View\topnavloggedin.html" />
+    <Content Include="View\viewadvert.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
