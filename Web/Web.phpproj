@@ -73,6 +73,7 @@
     <Content Include="Scripts\Custom\Image.js" />
     <Content Include="Scripts\Custom\myprofile.js" />
     <Content Include="Scripts\Custom\register.js" />
+    <Content Include="Scripts\Custom\searchresults.js" />
     <Content Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

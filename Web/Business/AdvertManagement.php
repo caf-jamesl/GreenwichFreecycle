@@ -80,17 +80,17 @@ class AdvertManagement
         return $database->select($statement)[0];
     }
 
-    public function searchAdverts($fullTextKeywords, $likeKeywords)
+    public function searchAdverts($fullTextKeywords, $likeKeywords, $postcode = '', $distance = '', $resultsOrder = '')
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('SELECT * FROM Adverts WHERE MATCH(Title, Description) AGAINST (? IN BOOLEAN MODE)');
+        $statement = $connection->prepare("SELECT * FROM Adverts WHERE MATCH(Title, Description) AGAINST (? IN BOOLEAN MODE) order by InsertedStamp $resultsOrder");
         $statement->bindValue(1, $fullTextKeywords, \PDO::PARAM_STR);
         $database = new Database;
         $results = $database->select($statement);
         if (!$results)
         {
         $connection = ConnectionFactory::getFactory()->getConnection();
-        $statement = $connection->prepare('SELECT * FROM Adverts WHERE Title REGEXP ? or Description REGEXP ?');
+        $statement = $connection->prepare("SELECT * FROM Adverts WHERE Title REGEXP ? or Description REGEXP ? order by InsertedStamp $resultsOrder");
         $statement->bindValue(1, $likeKeywords, \PDO::PARAM_STR);
         $statement->bindValue(2, $likeKeywords, \PDO::PARAM_STR);
         $database = new Database;
