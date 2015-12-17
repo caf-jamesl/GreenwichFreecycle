@@ -13,6 +13,7 @@ use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 use GreenwichFreecycle\Web\Utilities\Validation;
 use GreenwichFreecycle\Web\Utilities\SessionManagement;
+use GreenwichFreecycle\Web\Utilities\Security;
 
 main();
 
@@ -24,8 +25,9 @@ function main()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $advertTitle =  $_POST['advertTitleInput'];
-            $advertDescription = $_POST['advertDescriptionTextarea'];
+            $security = new Security;
+            $advertTitle = $security->cleanString($_POST['advertTitleInput']);
+            $advertDescription = $security->cleanString($_POST['advertDescriptionTextarea']);
             $validation = new Validation;
             $result = $validation->validateAdvert($advertTitle, $advertDescription);
             if(!$result)
@@ -54,7 +56,7 @@ function main()
             header('Location: MyAdverts.php');
             exit;
         }
-        $imageHtml = new TemplateParameter('imageHtml', getImageHtml($advert));
+        $imageHtml = new TemplateParameter('imageHtml', $advertManagement->getImageHtml($advert, true));
         $advertTitle = new TemplateParameter('advertTitle', $advert->Title);
         $advertDescription = new TemplateParameter('advertDescription', $advert->Description);
         $advertId = new TemplateParameter('advertId', $advert->AdvertId);
@@ -67,20 +69,6 @@ function main()
         header('Location: Index.php');
         exit;
     }
-}
-
-function getImageHtml($advert)
-{
-    $advertManagement = new AdvertManagement;
-    $images = $advertManagement->GetImages($advert->AdvertId);
-    foreach ($images as $image)
-    {
-    $html = $html . "<div class=\"col-xs-12 col-sm-12 col-md-3\">
-                        <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"User uploaded image of $advert->Title\" /></a>
-                        <a href=\"../Controller/RemoveConfirm.php?advertId=$advert->AdvertId&amp;imageId=$image->ImageId\">Remove image</a>
-                     </div>";
-    }
-    return $html;
 }
 
 function outputPage($templateParameters = '')

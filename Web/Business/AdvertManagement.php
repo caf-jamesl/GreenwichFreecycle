@@ -80,13 +80,23 @@ class AdvertManagement
         return $database->select($statement)[0];
     }
 
-    public function searchAdverts($keywords)
+    public function searchAdverts($fullTextKeywords, $likeKeywords)
     {
         $connection = ConnectionFactory::getFactory()->getConnection();
         $statement = $connection->prepare('SELECT * FROM Adverts WHERE MATCH(Title, Description) AGAINST (? IN BOOLEAN MODE)');
-        $statement->bindValue(1, $keywords, \PDO::PARAM_STR);
+        $statement->bindValue(1, $fullTextKeywords, \PDO::PARAM_STR);
         $database = new Database;
-        return $database->select($statement);
+        $results = $database->select($statement);
+        if (!$results)
+        {
+        $connection = ConnectionFactory::getFactory()->getConnection();
+        $statement = $connection->prepare('SELECT * FROM Adverts WHERE Title REGEXP ? or Description REGEXP ?');
+        $statement->bindValue(1, $likeKeywords, \PDO::PARAM_STR);
+        $statement->bindValue(2, $likeKeywords, \PDO::PARAM_STR);
+        $database = new Database;
+        $results = $database->select($statement);
+        }
+        return $results;
     }
 
     public function createAdvertHtml($advert, $editable)
@@ -105,9 +115,11 @@ class AdvertManagement
         if($editable)
         {
         $link = "../Controller/EditAdvert.php?advertId=$advert->AdvertId";
+        $linkTooltip = 'Click to edit advert';
         } else
         {
-         $link = '#';
+         $link = "../Controller/ViewAdvert.php?advertId=$advert->AdvertId";
+         $linkTooltip = 'Click to view advert';
         }
         return "
         <div class=\"search-result row\">
@@ -121,11 +133,29 @@ class AdvertManagement
                 </ul>
             </div>
             <div class=\"col-xs-12 col-sm-12 col-md-7 excerpet\">
-                <h3><a href=\"$link\" title=\"Click to edit advert\">$advert->Title</a></h3>
+                <h3><a href=\"$link\" title=\"$linkTooltip\">$advert->Title</a></h3>
                 <p>$advert->Description</p>
             </div>
             <span class=\"clearfix borda\"></span>
         </div>";
+    }
+
+    public function getImageHtml($advert, $removable)
+    {
+    $advertManagement = new AdvertManagement;
+    $images = $advertManagement->GetImages($advert->AdvertId);
+    foreach ($images as $image)
+    {
+    if($removable)
+    {
+    $removeLink = "<a href=\"../Controller/RemoveConfirm.php?advertId=$advert->AdvertId&amp;imageId=$image->ImageId\">Remove image</a>";
+    }
+    $html = $html . "<div class=\"col-xs-12 col-sm-12 col-md-3\">
+                        <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"User uploaded image of $advert->Title\" /></a>
+                        $removeLink
+                     </div>";
+    }
+    return $html;
     }
 
     private function insertAdvert($title, $description, $userId)

@@ -14,11 +14,12 @@ main();
 
 function main()
 {
-    $keywords = trim($_GET['keywords']) . '*';
+    $keywords = trim($_GET['keywords']);
     $numberOfResults = $_GET['resultsNumberSelect'];
-    $keywords = str_replace(' ', '*, ', $keywords);
+    $fullTextKeywords = str_replace(' ', '*, ', $keywords) . '*';
+    $likeKeywords =  str_replace(' ', '|', $keywords);
     $advertManagement = new AdvertManagement;
-    $results = $advertManagement->searchAdverts($keywords);
+    $results = $advertManagement->searchAdverts($fullTextKeywords, $likeKeywords);
     $results = array_slice($results, 0, $numberOfResults);
     $searchResultsHtml = createSearchResults($results);
     $searchNumber = new TemplateParameter('searchNumber', count($results));

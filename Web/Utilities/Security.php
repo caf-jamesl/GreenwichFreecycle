@@ -18,6 +18,13 @@ class Security
     {
         return md5($string);
     }
+
+    public function cleanString($string)
+    {
+     $string =  str_replace('<', '', $string);
+     $string =  str_replace('>', '', $string);
+     return trim($string);
+    }
 }
 
 ?>

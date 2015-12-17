@@ -31,6 +31,7 @@
     <Compile Include="Controller\RemoveAdvert.php" />
     <Compile Include="Controller\RemoveConfirm.php" />
     <Compile Include="Controller\SearchResults.php" />
+    <Compile Include="Controller\ViewAdvert.php" />
     <Compile Include="DataAccess\ConnectionFactory.php" />
     <Compile Include="DataAccess\Database.php" />
     <Compile Include="Controller\Login.php" />
@@ -81,7 +82,6 @@
     <Content Include="View\editadvert.html" />
     <Content Include="View\error.html" />
     <Content Include="View\index.html" />
-    <Content Include="View\logout.html" />
     <Content Include="View\messages.html" />
     <Content Include="View\myprofile.html" />
     <Content Include="View\myadverts.html" />

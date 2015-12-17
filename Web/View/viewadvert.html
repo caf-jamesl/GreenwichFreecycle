@@ -6,54 +6,16 @@
 </head>
 <body>
     {{topNav}}
-    <div class="container">
-        <div class="row">
-            <h2>Search Greenwich Freecycle</h2>
-            <form class="form-inline" action="../Controller/SearchResults.php" method="get">
-                <div class="form-group">
-                    <label class="filter-col" style="margin-right:0;">Rows per page:</label>
-                    <select name="resultsNumberSelect" class="form-control">
-                        <option selected="selected" value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
-                        <option value="400">400</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="filter-col" style="margin-right: 0;">Order by:</label>
-                    <select class="form-control">
-                        <option>Descendent</option>
-                    </select>
-                </div>
-                <br />
-                <br />
-                <div id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" class="search-query form-control" placeholder="Search" name="keywords" required="required" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="submit">
-                                <span class=" glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </form>
-        </div>
+    <div>
+        <a href="../Controller/SearchResults.php">Back to search</a>
     </div>
-    <hgroup class="mb20">
-        <h1>Search Results</h1>
-        <h2 class="lead"><strong class="text-danger">{{searchNumber}}</strong> results were found for the search for <strong class="text-danger">{{searchKeywords}}</strong></h2>
-    </hgroup>
     <div class="container">
-        {{searchResults}}
+        <h1>{{advertTitle}}</h1>
+        <a href="../Controller/SendMessage.php?id={{UserId}}">Contact seller</a>
+        <p>{{advertDescription}}</p>
+    </div>
+    <div class="container">
+        {{advertImages}}
     </div>
 </body>
 </html>

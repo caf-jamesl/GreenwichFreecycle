@@ -13,6 +13,7 @@ use GreenwichFreecycle\Web\Model\Enum\AccountStatus;
 use GreenwichFreecycle\Web\Utilities\PageManagement;
 use GreenwichFreecycle\Web\Utilities\Validation;
 use GreenwichFreecycle\Web\Utilities\SessionManagement;
+use GreenwichFreecycle\Web\Utilities\Security;
 
 main();
 
@@ -24,8 +25,9 @@ function main()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $advertTitle = $_POST['advertTitleInput'];
-            $advertDescription = $_POST['advertDescriptionTextarea'];
+            $security = new Security;
+            $advertTitle = $security->cleanString($_POST['advertTitleInput']);
+            $advertDescription = $security->cleanString($_POST['advertDescriptionTextarea']);
             $validation = new Validation;
             $result = $validation->validateAdvert($advertTitle, $advertDescription);
             if(!$result)

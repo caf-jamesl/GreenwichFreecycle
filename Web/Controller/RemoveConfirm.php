@@ -43,7 +43,7 @@ function main()
             header('Location: MyAdverts.php');
             exit;
         }
-        $imageHtml = new TemplateParameter('imageHtml', getImageHtml($imageId));
+        $imageHtml = new TemplateParameter('imageHtml', getImageHtml($imageId, $advert));
         $removeAdvertId = new TemplateParameter('removeAdvertId', $advertId);
         $removeImageId = new TemplateParameter('removeImageId', $imageId);
         outputPage(array($imageHtml, $removeAdvertId, $removeImageId));
@@ -56,12 +56,12 @@ function main()
     }
 }
 
-function getImageHtml($imageId)
+function getImageHtml($imageId, $advert)
 {
     $advertManagement = new AdvertManagement;
     $image = $advertManagement->GetImage($imageId);
     return "<div class=\"col-xs-12 col-sm-12 col-md-3\">
-                <a class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"Lorem ipsum\" /></a>
+                <a href=\"#\" title=\"$advert->Title\" class=\"thumbnail\"><img src=\"../../..$image->Location\" alt=\"User uploaded image of $advert->Title\" /></a>
             </div>";
 }
 
